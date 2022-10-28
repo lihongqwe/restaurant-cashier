@@ -47,6 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="merchantsId != null">#{merchantsId},</if>
             <if test="foodId != null">#{foodId},</if>
             <if test="foodPrice != null">#{foodPrice},</if>
+            <if test="foodName != null">#{foodName},</if>
             <if test="foodPicture != null">#{foodPicture},</if>
          </trim>
     </insert>

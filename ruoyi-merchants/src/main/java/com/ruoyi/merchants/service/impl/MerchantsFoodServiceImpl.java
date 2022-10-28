@@ -64,6 +64,7 @@ public class MerchantsFoodServiceImpl implements IMerchantsFoodService
      */
     @Override
     public AjaxResult insertMerchantsFood(MultipartFile fileUpload, MerchantsFood merchantsFood)
+//    public AjaxResult insertMerchantsFood(MultipartFile fileUpload)
     {
         //获取文件名
         String fileName = fileUpload.getOriginalFilename();
@@ -72,6 +73,7 @@ public class MerchantsFoodServiceImpl implements IMerchantsFoodService
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         //为了避免发生图片替换，这里使用了文件名重新生成
         fileName = UUID.randomUUID()+suffixName;
+        fileUpload.getOriginalFilename();
         try {
             String url=ProfilePhotoMapperPath+fileName;
             if(insertMerchantsFood(url,merchantsFood)==1){
@@ -91,6 +93,7 @@ public class MerchantsFoodServiceImpl implements IMerchantsFoodService
         merchantsFood.setFoodPicture(url);
         long size = merchantsFoodMapper.selectMerchantsFoodList(merchantsFood).size();
         merchantsFood.setFoodId(size+1);
+        System.out.println(merchantsFood);
         return merchantsFoodMapper.insertMerchantsFood(merchantsFood);
     }
 

@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.merchants;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -76,11 +77,15 @@ public class MerchantsFoodController extends BaseController
      * 新增【菜单】
      */
     @PostMapping
-    public AjaxResult add(@RequestParam("avatar") MultipartFile fileUpload,@RequestBody MerchantsFood merchantsFood)
+    public AjaxResult add(@RequestParam("avatar") MultipartFile fileUpload,@RequestParam("foodName") String  foodName,
+                          @RequestParam("foodPrice") BigDecimal foodPrice)
     {
-//        merchantsFood.setMerchantsId(userId);
         Long MerchantsId=2L;
+        MerchantsFood merchantsFood = new MerchantsFood();
         merchantsFood.setMerchantsId(MerchantsId);
+        merchantsFood.setFoodName(foodName);
+        merchantsFood.setFoodPrice(foodPrice);
+
         return merchantsFoodService.insertMerchantsFood(fileUpload,merchantsFood);
     }
 
