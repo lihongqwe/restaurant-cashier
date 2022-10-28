@@ -3,6 +3,7 @@ package com.ruoyi.merchants.mapper;
 import java.util.List;
 import com.ruoyi.merchants.domain.MerchantsBill;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 【请填写功能名称】Mapper接口
@@ -61,4 +62,8 @@ public interface MerchantsBillMapper
      * @return 结果
      */
     public int deleteMerchantsBillByIds(Long[] ids);
+
+
+    int updateMerchantsBillStateById(@Param("merchantsId") Long merchantsId,@Param("billId") Long billId);
 }
+

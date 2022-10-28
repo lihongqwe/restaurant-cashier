@@ -58,4 +58,6 @@ public interface IMerchantsBillService
      * @return 结果
      */
     public int deleteMerchantsBillById(Long id);
+
+    int payBill(Long merchantsId, Long billId);
 }

@@ -43,6 +43,12 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
         return merchantsBillMapper.selectMerchantsBillList(merchantsBill);
     }
 
+    @Override
+    public int payBill(Long merchantsId, Long billId) {
+
+        return merchantsBillMapper.updateMerchantsBillStateById(merchantsId,billId);
+    }
+
     /**
      * 新增【请填写功能名称】
      * 
@@ -90,4 +96,6 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
     {
         return merchantsBillMapper.deleteMerchantsBillById(id);
     }
+
+
 }
