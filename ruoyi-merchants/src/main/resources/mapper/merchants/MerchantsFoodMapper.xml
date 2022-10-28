@@ -62,13 +62,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteMerchantsFoodById" parameterType="Long">
-        delete from merchants_food where id = #{id}
+        delete from merchants_food where merchants_id = #{merchantsId} and food_id=#{foodId}
     </delete>
 
-    <delete id="deleteMerchantsFoodByIds" parameterType="String">
-        delete from merchants_food where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
+    <delete id="deleteMerchantsFoodByIds">
+        delete from merchants_food where  merchants_id = #{MerchantsId} and food_id in
+        <foreach item="foodId" collection="foodIds" open="(" separator="," close=")">
+            #{foodId}
         </foreach>
     </delete>
 </mapper>

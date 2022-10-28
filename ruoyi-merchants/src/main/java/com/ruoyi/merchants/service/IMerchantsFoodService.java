@@ -50,10 +50,10 @@ public interface IMerchantsFoodService
     /**
      * 批量删除【请填写功能名称】
      * 
-     * @param ids 需要删除的【请填写功能名称】主键集合
+     * @param foodIds 需要删除的【请填写功能名称】主键集合
      * @return 结果
      */
-    public int deleteMerchantsFoodByIds(Long MerchantsId,Long[] ids);
+    public int deleteMerchantsFoodByIds(Long MerchantsId,Long[] foodIds);
 
     /**
      * 删除【请填写功能名称】信息

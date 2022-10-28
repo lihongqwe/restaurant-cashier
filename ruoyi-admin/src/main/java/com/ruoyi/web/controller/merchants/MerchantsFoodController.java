@@ -17,14 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 菜单 Controller
- * 
+ *
  * @author lihong
  * @date 2022-10-27
  */
 @RestController
 @RequestMapping("/merchants/food")
-public class MerchantsFoodController extends BaseController
-{
+public class MerchantsFoodController extends BaseController {
     @Autowired
     private IMerchantsFoodService merchantsFoodService;
 
@@ -36,17 +35,17 @@ public class MerchantsFoodController extends BaseController
      * 查询【菜单】列表
      */
     @GetMapping("/list")
-    public TableDataInfo list(@RequestBody MerchantsFood merchantsFood)
-    {
+    public TableDataInfo list(MerchantsFood merchantsFood) {
         startPage();
         //添加商家id
 //        merchantsFood.setMerchantsId(userId);
+        Long MerchantsId = 2L;
+        merchantsFood.setMerchantsId(MerchantsId);
         List<MerchantsFood> list = merchantsFoodService.selectMerchantsFoodList(merchantsFood);
-        System.out.println(merchantsFood);
         List<FoodVo> collect = list.stream().map(food -> {
                     FoodVo foodVo = new FoodVo();
                     BeanUtils.copyProperties(food, foodVo);
-                    foodVo.setFoodPrice(food.getFoodPrice().toString()+"元");
+                    foodVo.setFoodPrice(food.getFoodPrice().toString() + "元");
                     return foodVo;
                 }
         ).collect(Collectors.toList());
@@ -77,24 +76,22 @@ public class MerchantsFoodController extends BaseController
      * 新增【菜单】
      */
     @PostMapping
-    public AjaxResult add(@RequestParam("avatar") MultipartFile fileUpload,@RequestParam("foodName") String  foodName,
-                          @RequestParam("foodPrice") BigDecimal foodPrice)
-    {
-        Long MerchantsId=2L;
+    public AjaxResult add(@RequestParam("avatar") MultipartFile fileUpload, @RequestParam("foodName") String foodName,
+                          @RequestParam("foodPrice") BigDecimal foodPrice) {
+        Long MerchantsId = 2L;
         MerchantsFood merchantsFood = new MerchantsFood();
         merchantsFood.setMerchantsId(MerchantsId);
         merchantsFood.setFoodName(foodName);
         merchantsFood.setFoodPrice(foodPrice);
 
-        return merchantsFoodService.insertMerchantsFood(fileUpload,merchantsFood);
+        return merchantsFoodService.insertMerchantsFood(fileUpload, merchantsFood);
     }
 
     /**
      * 修改【菜单】
      */
     @PutMapping
-    public AjaxResult edit(@RequestBody MerchantsFood merchantsFood)
-    {
+    public AjaxResult edit(@RequestBody MerchantsFood merchantsFood) {
 //        merchantsFood.setMerchantsId(userId);
         return toAjax(merchantsFoodService.updateMerchantsFood(merchantsFood));
     }
@@ -102,11 +99,10 @@ public class MerchantsFoodController extends BaseController
     /**
      * 删除【菜单】
      */
-	@GetMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
-        //        merchantsFood.setMerchantsId(userId);
-        Long MerchantsId=2L;
-        return toAjax(merchantsFoodService.deleteMerchantsFoodByIds(MerchantsId,ids));
+    @GetMapping("/{foodIds}")
+    public AjaxResult remove(@PathVariable Long[] foodIds) {
+        //      Long MerchantsId=  merchantsFood.setMerchantsId(userId);
+        Long MerchantsId = 2L;
+        return toAjax(merchantsFoodService.deleteMerchantsFoodByIds(MerchantsId, foodIds));
     }
 }

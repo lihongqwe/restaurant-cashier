@@ -34,7 +34,7 @@ server:
       min-spare: 100
 
 SavePath:
-  ProfilePhoto: 'D:/java/java_practice/restaurant-cashier/ruoyi-admin/src/main/resources/images'  #图标存储路径
+  ProfilePhoto: 'D:/java/java_practice/restaurant-cashier/ruoyi-admin/src/main/resources/images/'  #图标存储路径
   ProfilePhotoMapper: 'profilePhoto/'  #图标的映射路径
 # 日志配置
 logging:

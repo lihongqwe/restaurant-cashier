@@ -93,7 +93,6 @@ public class MerchantsFoodServiceImpl implements IMerchantsFoodService
         merchantsFood.setFoodPicture(url);
         long size = merchantsFoodMapper.selectMerchantsFoodList(merchantsFood).size();
         merchantsFood.setFoodId(size+1);
-        System.out.println(merchantsFood);
         return merchantsFoodMapper.insertMerchantsFood(merchantsFood);
     }
 
@@ -113,13 +112,13 @@ public class MerchantsFoodServiceImpl implements IMerchantsFoodService
     /**
      * 批量删除【请填写功能名称】
      * 
-     * @param ids 需要删除的【请填写功能名称】主键
+     * @param foodIds 需要删除的【请填写功能名称】主键
      * @return 结果
      */
     @Override
-    public int deleteMerchantsFoodByIds(Long MerchantsId,Long[] ids)
+    public int deleteMerchantsFoodByIds(Long MerchantsId,Long[] foodIds)
     {
-        return merchantsFoodMapper.deleteMerchantsFoodByIds(MerchantsId,ids);
+        return merchantsFoodMapper.deleteMerchantsFoodByIds(MerchantsId,foodIds);
     }
 
     /**

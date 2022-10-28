@@ -58,8 +58,8 @@ public interface MerchantsFoodMapper
     /**
      * 批量删除【请填写功能名称】
      * 
-     * @param ids 需要删除的数据主键集合
+     * @param foodIds 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteMerchantsFoodByIds(@Param("MerchantsId") Long MerchantsId,@Param("ids")  Long[] ids);
+    public int deleteMerchantsFoodByIds(@Param("MerchantsId") Long MerchantsId,@Param("foodIds")  Long[] foodIds);
 }
