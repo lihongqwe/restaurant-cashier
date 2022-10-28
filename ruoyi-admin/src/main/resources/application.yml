@@ -33,6 +33,9 @@ server:
       # Tomcat启动初始化的线程数，默认值10
       min-spare: 100
 
+SavePath:
+  ProfilePhoto: 'D:/java/java_practice/wall/src/main/resources/images/'  #图标存储路径
+  ProfilePhotoMapper: 'profilePhoto/'  #图标的映射路径
 # 日志配置
 logging:
   level:

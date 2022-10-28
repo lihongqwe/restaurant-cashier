@@ -23,7 +23,7 @@ public class MerchantsFood extends BaseEntity
     @Excel(name = "商家id")
     private Long merchantsId;
 
-    /** 菜品名字 */
+    /** 菜品id */
     @Excel(name = "菜品id")
     private Long foodId;
 
@@ -31,10 +31,11 @@ public class MerchantsFood extends BaseEntity
     @Excel(name = "菜品价格")
     private BigDecimal foodPrice;
 
-
     /** 菜品名字 */
     @Excel(name = "菜品名字")
     private String foodName;
+
+    private String foodPicture;
 
     public void setId(Long id) 
     {
@@ -83,6 +84,14 @@ public class MerchantsFood extends BaseEntity
         this.foodName = foodName;
     }
 
+    public String getFoodPicture() {
+        return foodPicture;
+    }
+
+    public void setFoodPicture(String foodPicture) {
+        this.foodPicture = foodPicture;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -91,6 +100,7 @@ public class MerchantsFood extends BaseEntity
             .append("foodId", getFoodId())
             .append("foodPrice", getFoodPrice())
             .append("foodName", getFoodName())
+            .append("foodPicture", getFoodPicture())
             .toString();
     }
 }

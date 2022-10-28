@@ -3,6 +3,8 @@ package com.ruoyi.merchants.mapper;
 import java.util.List;
 import com.ruoyi.merchants.domain.MerchantsFood;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * 【请填写功能名称】Mapper接口
@@ -59,5 +61,5 @@ public interface MerchantsFoodMapper
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteMerchantsFoodByIds(Long[] ids);
+    public int deleteMerchantsFoodByIds(@Param("MerchantsId") Long MerchantsId,@Param("ids")  Long[] ids);
 }

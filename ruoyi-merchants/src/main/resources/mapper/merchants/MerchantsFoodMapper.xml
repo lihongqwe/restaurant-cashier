@@ -10,10 +10,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="foodId"    column="food_id"    />
         <result property="foodPrice"    column="food_price"    />
         <result property="foodName"    column="food_name"    />
+        <result property="foodPicture"    column="food_picture"    />
     </resultMap>
 
     <sql id="selectMerchantsFoodVo">
-        select id, merchants_id, food_id, food_price, food_name from merchants_food
+        select id, merchants_id, food_id, food_price, food_name ,food_picture from merchants_food
     </sql>
 
     <select id="selectMerchantsFoodList" parameterType="com.ruoyi.merchants.domain.MerchantsFood" resultMap="MerchantsFoodResult">
@@ -39,25 +40,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="foodId != null">food_id,</if>
             <if test="foodPrice != null">food_price,</if>
             <if test="foodName != null">food_name,</if>
+            <if test="foodPicture != null">food_picture,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
             <if test="merchantsId != null">#{merchantsId},</if>
             <if test="foodId != null">#{foodId},</if>
             <if test="foodPrice != null">#{foodPrice},</if>
-            <if test="foodName != null">#{foodName},</if>
+            <if test="foodPicture != null">#{foodPicture},</if>
          </trim>
     </insert>
 
     <update id="updateMerchantsFood" parameterType="com.ruoyi.merchants.domain.MerchantsFood">
         update merchants_food
         <trim prefix="SET" suffixOverrides=",">
-            <if test="merchantsId != null">merchants_id = #{merchantsId},</if>
-            <if test="foodId != null">food_id = #{foodId},</if>
             <if test="foodPrice != null">food_price = #{foodPrice},</if>
             <if test="foodName != null">food_name = #{foodName},</if>
         </trim>
-        where id = #{id}
+        where merchants_id = #{merchantsId} and food_id=#{foodId}
     </update>
 
     <delete id="deleteMerchantsFoodById" parameterType="Long">
