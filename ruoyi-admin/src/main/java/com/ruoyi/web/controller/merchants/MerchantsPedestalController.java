@@ -1,7 +1,11 @@
 package com.ruoyi.web.controller.merchants;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.utils.bean.BeanUtils;
+import com.ruoyi.merchants.domain.vo.PedestalVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,8 +45,15 @@ public class MerchantsPedestalController extends BaseController
     public TableDataInfo list(MerchantsPedestal merchantsPedestal)
     {
         startPage();
+        Long MerchantsId = 2L;
+        merchantsPedestal.setMerchantsId(MerchantsId);
         List<MerchantsPedestal> list = merchantsPedestalService.selectMerchantsPedestalList(merchantsPedestal);
-        return getDataTable(list);
+        List<PedestalVo> collect = list.stream().map(pedestal -> {
+            PedestalVo pedestalVo = new PedestalVo();
+            BeanUtils.copyProperties(pedestal, pedestalVo);
+            return pedestalVo;
+        }).collect(Collectors.toList());
+        return getDataTable(collect);
     }
 
     /**

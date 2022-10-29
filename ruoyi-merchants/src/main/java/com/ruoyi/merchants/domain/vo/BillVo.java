@@ -3,14 +3,14 @@ package com.ruoyi.merchants.domain.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 
+import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 public class BillVo {
 
 
-    /** 店家id */
-    @Excel(name = "店家id")
-    private Long merchantsId;
 
     /** 账单id */
     @Excel(name = "账单id")
@@ -22,7 +22,7 @@ public class BillVo {
 
     /** 菜品名称 */
     @Excel(name = "菜品名称")
-    private String foodName;
+    private List<String> foodName;
 
     /** 账单状态（0:未结算，1:已结算） */
     @Excel(name = "账单状态", readConverterExp = "0=:未结算，1:已结算")
@@ -36,6 +36,16 @@ public class BillVo {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
+    /** 账单总价格 */
+    @Excel(name = "账单总价格")
+    private BigDecimal billPrice;
+
+
+    /** 结算时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "结算时间")
+    private Date checkOutTime;
+
 
     public Date getCreateTime() {
         return createTime;
@@ -45,13 +55,6 @@ public class BillVo {
         this.createTime = createTime;
     }
 
-    public Long getMerchantsId() {
-        return merchantsId;
-    }
-
-    public void setMerchantsId(Long merchantsId) {
-        this.merchantsId = merchantsId;
-    }
 
     public Long getBillId() {
         return billId;
@@ -69,12 +72,12 @@ public class BillVo {
         this.pedestalId = pedestalId;
     }
 
-    public String getFoodName() {
+    public List<String> getFoodName() {
         return foodName;
     }
 
     public void setFoodName(String foodName) {
-        this.foodName = foodName;
+        this.foodName = Collections.singletonList(foodName);
     }
 
     public Integer getBillState() {
@@ -92,29 +95,39 @@ public class BillVo {
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
+
+    public void setFoodName(List<String> foodName) {
+        this.foodName = foodName;
+    }
+
+    public BigDecimal getBillPrice() {
+        return billPrice;
+    }
+
+    public void setBillPrice(BigDecimal billPrice) {
+        this.billPrice = billPrice;
+    }
+
+    public Date getCheckOutTime() {
+        return checkOutTime;
+    }
+
+    public void setCheckOutTime(Date checkOutTime) {
+        this.checkOutTime = checkOutTime;
+    }
     public BillVo(){}
 
     @Override
     public String toString() {
         return "BillVo{" +
-                "merchantsId=" + merchantsId +
-                ", billId=" + billId +
+                "billId=" + billId +
                 ", pedestalId=" + pedestalId +
-                ", foodName='" + foodName + '\'' +
+                ", foodName=" + foodName +
                 ", billState=" + billState +
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", createTime=" + createTime +
+                ", billPrice=" + billPrice +
+                ", checkOutTime=" + checkOutTime +
                 '}';
-    }
-
-    public BillVo(Long merchantsId, Long billId, Long pedestalId, String foodName, Integer billState, String paymentMethod, Date createTime) {
-
-        this.merchantsId = merchantsId;
-        this.billId = billId;
-        this.pedestalId = pedestalId;
-        this.foodName = foodName;
-        this.billState = billState;
-        this.paymentMethod = paymentMethod;
-        this.createTime = createTime;
     }
 }

@@ -13,10 +13,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="billState"    column="bill_state"    />
         <result property="paymentMethod"    column="payment_method"    />
         <result property="createTime"    column="create_time"    />
+        <result property="billPrice"    column="bill_price"    />
+        <result property="checkOutTime"    column="check_out_time"    />
     </resultMap>
 
     <sql id="selectMerchantsBillVo">
-        select id, merchants_id, bill_id, pedestal_id, food_name, bill_state, payment_method ,create_time from merchants_bill
+        select id, merchants_id, bill_id, pedestal_id, food_name, bill_state, payment_method ,create_time,bill_price,check_out_time  from merchants_bill
     </sql>
 
     <select id="selectMerchantsBillList" parameterType="com.ruoyi.merchants.domain.MerchantsBill" resultMap="MerchantsBillResult">
@@ -44,6 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="foodName != null and foodName != ''">food_name,</if>
             <if test="billState != null">bill_state,</if>
             <if test="paymentMethod != null">payment_method,</if>
+            <if test="billPrice != null">bill_price,</if>
             create_time)
            values (<if test="id != null">#{id},</if>
             <if test="merchantsId != null">#{merchantsId},</if>
@@ -71,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <update id="updateMerchantsBillStateById" >
-        update  merchants_bill  set bill_state = 1
+        update  merchants_bill  set bill_state = 1 , check_out_time=sysdate()
             where bill_id=#{billId} and merchants_id = #{merchantsId}
     </update>
 

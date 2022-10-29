@@ -8,10 +8,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="pedestalId"    column="pedestal_id"    />
         <result property="pedestalState"    column="pedestal_state"    />
         <result property="merchantsId"    column="merchants_id"    />
+        <result property="createTime"    column="create_time"    />
     </resultMap>
 
     <sql id="selectMerchantsPedestalVo">
-        select pedestal_id, pedestal_state, merchants_id from merchants_pedestal
+        select pedestal_id, pedestal_state, merchants_id ,create_time from merchants_pedestal
     </sql>
 
     <select id="selectMerchantsPedestalList" parameterType="com.ruoyi.merchants.domain.MerchantsPedestal" resultMap="MerchantsPedestalResult">
@@ -28,17 +29,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertMerchantsPedestal" parameterType="com.ruoyi.merchants.domain.MerchantsPedestal">
-        insert into merchants_pedestal
-        <trim prefix="(" suffix=")" suffixOverrides=",">
+        insert into merchants_pedestal(
             <if test="pedestalId != null">pedestal_id,</if>
             <if test="pedestalState != null">pedestal_state,</if>
             <if test="merchantsId != null">merchants_id,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="pedestalId != null">#{pedestalId},</if>
-            <if test="pedestalState != null">#{pedestalState},</if>
-            <if test="merchantsId != null">#{merchantsId},</if>
-         </trim>
+            )
+            values(
+        <if test="pedestalId != null">#{pedestalId},</if>
+        <if test="pedestalState != null">0,</if>
+        <if test="merchantsId != null">#{merchantsId},</if>
+        )
     </insert>
 
     <update id="updateMerchantsPedestal" parameterType="com.ruoyi.merchants.domain.MerchantsPedestal">

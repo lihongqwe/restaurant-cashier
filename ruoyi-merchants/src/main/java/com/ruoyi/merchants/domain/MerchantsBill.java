@@ -1,10 +1,12 @@
 package com.ruoyi.merchants.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -47,6 +49,16 @@ public class MerchantsBill extends BaseEntity
     /** 创建时间 */
     @Excel(name = "创建时间",dateFormat = "yyyy-MM-dd")
     private Date createTime;
+
+    /** 账单总价格 */
+    @Excel(name = "账单总价格")
+    private String billPrice;
+
+
+    /** 结算时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "结算时间")
+    private Date checkOutTime;
 
     public void setId(Long id) 
     {
@@ -112,6 +124,22 @@ public class MerchantsBill extends BaseEntity
         return paymentMethod;
     }
 
+    public String getBillPrice() {
+        return billPrice;
+    }
+
+    public void setBillPrice(String billPrice) {
+        this.billPrice = billPrice;
+    }
+
+    public Date getCheckOutTime() {
+        return checkOutTime;
+    }
+
+    public void setCheckOutTime(Date checkOutTime) {
+        this.checkOutTime = checkOutTime;
+    }
+
     @Override
     public Date getCreateTime() {
         return createTime;
@@ -124,15 +152,17 @@ public class MerchantsBill extends BaseEntity
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("merchantsId", getMerchantsId())
-            .append("billId", getBillId())
-            .append("pedestalId", getPedestalId())
-            .append("foodName", getFoodName())
-            .append("billState", getBillState())
-            .append("paymentMethod", getPaymentMethod())
-            .append("createTime", getCreateTime())
-            .toString();
+        return "MerchantsBill{" +
+                "id=" + id +
+                ", merchantsId=" + merchantsId +
+                ", billId=" + billId +
+                ", pedestalId=" + pedestalId +
+                ", foodName='" + foodName + '\'' +
+                ", billState=" + billState +
+                ", paymentMethod='" + paymentMethod + '\'' +
+                ", createTime=" + createTime +
+                ", billPrice=" + billPrice +
+                ", checkOutTime=" + checkOutTime +
+                '}';
     }
 }

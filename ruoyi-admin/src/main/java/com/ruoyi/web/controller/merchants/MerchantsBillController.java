@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.merchants;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
@@ -41,12 +42,13 @@ public class MerchantsBillController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(MerchantsBill merchantsBill) {
         startPage();
+        Long MerchantsId = 2L;
+        merchantsBill.setMerchantsId(MerchantsId);
         List<MerchantsBill> list = merchantsBillService.selectMerchantsBillList(merchantsBill);
         List<BillVo> collect = list.stream().map(bill -> {
                     BillVo billVo = new BillVo();
-                    Long MerchantsId = 2L;  //模拟登录用户的id
-                    billVo.setMerchantsId(MerchantsId);
                     BeanUtils.copyProperties(bill, billVo);
+
                     return billVo;
                 }
         ).collect(Collectors.toList());
