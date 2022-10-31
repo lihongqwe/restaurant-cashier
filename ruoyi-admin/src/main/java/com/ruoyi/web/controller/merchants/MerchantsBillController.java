@@ -1,12 +1,17 @@
 package com.ruoyi.web.controller.merchants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson2.JSON;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.merchants.domain.vo.BillFareVo;
 import com.ruoyi.merchants.domain.vo.BillVo;
-import com.ruoyi.merchants.domain.vo.FoodVo;
+import com.ruoyi.merchants.domain.vo.food;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,19 +41,25 @@ public class MerchantsBillController extends BaseController {
     @Autowired
     private IMerchantsBillService merchantsBillService;
 
+    //登录用户的id
+    private final Long userId = getUserId();
+
     /**
      * 查询【账单】列表
      */
     @GetMapping("/list")
     public TableDataInfo list(MerchantsBill merchantsBill) {
         startPage();
-        Long MerchantsId = 2L;
-        merchantsBill.setMerchantsId(MerchantsId);
+        merchantsBill.setMerchantsId(userId);
         List<MerchantsBill> list = merchantsBillService.selectMerchantsBillList(merchantsBill);
         List<BillVo> collect = list.stream().map(bill -> {
                     BillVo billVo = new BillVo();
                     BeanUtils.copyProperties(bill, billVo);
-
+                    String foodName = bill.getFoodName().replace("food","")
+                            .replace("=",":");
+                    List<food> food=  JSONUtil.toList(foodName,food.class);
+                    billVo.setFoodName(food);
+                    billVo.setBillPrice(bill.getBillPrice().toString()+"元");
                     return billVo;
                 }
         ).collect(Collectors.toList());
@@ -59,11 +70,21 @@ public class MerchantsBillController extends BaseController {
     /**
      * 结账
      */
-    @GetMapping(value ="/pay/{billId}")
-    public AjaxResult pay(@PathVariable("billId") Long billId){
-        Long MerchantsId = 2L;
-        return toAjax(merchantsBillService.payBill(MerchantsId,billId));
+    @PostMapping(value ="/pay")
+    public AjaxResult pay(@RequestBody MerchantsBill merchantsBill ){
+
+        merchantsBill.setMerchantsId(userId);
+        return toAjax(merchantsBillService.payBill(merchantsBill));
     }
+
+    /**
+     * 下单
+     */
+    @PostMapping("/placeorder")
+    public AjaxResult PlaceOrder(@RequestBody BillFareVo billFareVo){
+        return toAjax(merchantsBillService.PlaceTheOrder(billFareVo));
+    }
+
 
     /**
      * 获取【请填写功能名称】详细信息

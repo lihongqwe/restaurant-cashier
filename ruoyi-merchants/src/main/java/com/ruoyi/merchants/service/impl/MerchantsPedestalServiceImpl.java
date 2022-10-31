@@ -52,7 +52,10 @@ public class MerchantsPedestalServiceImpl implements IMerchantsPedestalService
     @Override
     public int insertMerchantsPedestal(MerchantsPedestal merchantsPedestal)
     {
-        return merchantsPedestalMapper.insertMerchantsPedestal(merchantsPedestal);
+        if(merchantsPedestalMapper.selectMerchantsPedestalList(merchantsPedestal).size()==0){
+            return merchantsPedestalMapper.insertMerchantsPedestal(merchantsPedestal);
+        }
+        return 0;
     }
 
     /**
@@ -74,9 +77,9 @@ public class MerchantsPedestalServiceImpl implements IMerchantsPedestalService
      * @return 结果
      */
     @Override
-    public int deleteMerchantsPedestalByPedestalIds(Long[] pedestalIds)
+    public int deleteMerchantsPedestalByPedestalIds(Long MerchantsId ,Long[] pedestalIds)
     {
-        return merchantsPedestalMapper.deleteMerchantsPedestalByPedestalIds(pedestalIds);
+        return merchantsPedestalMapper.deleteMerchantsPedestalByPedestalIds(MerchantsId,pedestalIds);
     }
 
     /**

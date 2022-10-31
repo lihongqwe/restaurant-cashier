@@ -37,6 +37,7 @@ public class MerchantsPedestalController extends BaseController
 {
     @Autowired
     private IMerchantsPedestalService merchantsPedestalService;
+    private final Long userId = getUserId();
 
     /**
      * 查询【台座】列表
@@ -45,8 +46,7 @@ public class MerchantsPedestalController extends BaseController
     public TableDataInfo list(MerchantsPedestal merchantsPedestal)
     {
         startPage();
-        Long MerchantsId = 2L;
-        merchantsPedestal.setMerchantsId(MerchantsId);
+        merchantsPedestal.setMerchantsId(userId);
         List<MerchantsPedestal> list = merchantsPedestalService.selectMerchantsPedestalList(merchantsPedestal);
         List<PedestalVo> collect = list.stream().map(pedestal -> {
             PedestalVo pedestalVo = new PedestalVo();
@@ -82,7 +82,13 @@ public class MerchantsPedestalController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody MerchantsPedestal merchantsPedestal)
     {
-        return toAjax(merchantsPedestalService.insertMerchantsPedestal(merchantsPedestal));
+
+        merchantsPedestal.setMerchantsId(userId);
+        int i = merchantsPedestalService.insertMerchantsPedestal(merchantsPedestal);
+        if(i>0){
+            return  AjaxResult.success();
+        }
+        return AjaxResult.error("台座信息已存在！！！");
     }
 
     /**
@@ -100,6 +106,8 @@ public class MerchantsPedestalController extends BaseController
 	@DeleteMapping("/{pedestalIds}")
     public AjaxResult remove(@PathVariable Long[] pedestalIds)
     {
-        return toAjax(merchantsPedestalService.deleteMerchantsPedestalByPedestalIds(pedestalIds));
+        return toAjax(merchantsPedestalService.deleteMerchantsPedestalByPedestalIds(userId,pedestalIds));
     }
+
+
 }

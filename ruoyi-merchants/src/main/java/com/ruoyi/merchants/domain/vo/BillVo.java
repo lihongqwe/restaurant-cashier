@@ -3,13 +3,11 @@ package com.ruoyi.merchants.domain.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 
-import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class BillVo {
 
+public class BillVo {
 
 
     /** 账单id */
@@ -22,7 +20,7 @@ public class BillVo {
 
     /** 菜品名称 */
     @Excel(name = "菜品名称")
-    private List<String> foodName;
+    private List<food> foodName;
 
     /** 账单状态（0:未结算，1:已结算） */
     @Excel(name = "账单状态", readConverterExp = "0=:未结算，1:已结算")
@@ -38,8 +36,7 @@ public class BillVo {
 
     /** 账单总价格 */
     @Excel(name = "账单总价格")
-    private BigDecimal billPrice;
-
+    private String billPrice;
 
     /** 结算时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -72,12 +69,12 @@ public class BillVo {
         this.pedestalId = pedestalId;
     }
 
-    public List<String> getFoodName() {
+    public List<food> getFoodName() {
         return foodName;
     }
 
-    public void setFoodName(String foodName) {
-        this.foodName = Collections.singletonList(foodName);
+    public void setFoodName(List<food> foodName) {
+        this.foodName = foodName;
     }
 
     public Integer getBillState() {
@@ -96,15 +93,11 @@ public class BillVo {
         this.paymentMethod = paymentMethod;
     }
 
-    public void setFoodName(List<String> foodName) {
-        this.foodName = foodName;
-    }
-
-    public BigDecimal getBillPrice() {
+    public String getBillPrice() {
         return billPrice;
     }
 
-    public void setBillPrice(BigDecimal billPrice) {
+    public void setBillPrice(String billPrice) {
         this.billPrice = billPrice;
     }
 

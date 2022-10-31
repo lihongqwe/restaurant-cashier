@@ -1,6 +1,7 @@
 package com.ruoyi.merchants.service.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,36 +65,42 @@ public class MerchantsFoodServiceImpl implements IMerchantsFoodService
      */
     @Override
     public AjaxResult insertMerchantsFood(MultipartFile fileUpload, MerchantsFood merchantsFood)
-//    public AjaxResult insertMerchantsFood(MultipartFile fileUpload)
     {
         //获取文件名
         String fileName = fileUpload.getOriginalFilename();
-        //获取文件后缀名。也可以在这里添加判断语句，规定特定格式的图片才能上传，否则拒绝保存。
+        //获取文件后缀名。
         assert fileName != null;
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         //为了避免发生图片替换，这里使用了文件名重新生成
         fileName = UUID.randomUUID()+suffixName;
         fileUpload.getOriginalFilename();
-        try {
-            String url=ProfilePhotoMapperPath+fileName;
-            if(insertMerchantsFood(url,merchantsFood)==1){
-                //将图片保存到文件夹里
-                fileUpload.transferTo(new File(ProfilePhotoSavePath+fileName));
-                return AjaxResult.success("上传成功");
-            }
-            return AjaxResult.error("上传失败!!!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return AjaxResult.error("上传失败!!!");
-        }
-    }
-
-    public  int insertMerchantsFood(String url,MerchantsFood merchantsFood)
-    {
+        String url=ProfilePhotoMapperPath+fileName;
         merchantsFood.setFoodPicture(url);
-        long size = merchantsFoodMapper.selectMerchantsFoodList(merchantsFood).size();
+        //创建文件夹
+        File newPath =new File(ProfilePhotoSavePath,fileName);
+        if(!newPath.exists()){
+            newPath.mkdirs();
+        }
+        try {
+            //将图片保存到文件夹里
+            fileUpload.transferTo(newPath);
+            //将数据存如数据库
+            insertMerchantsFood(merchantsFood);
+            return AjaxResult.error("上传成功!!!");
+            } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return AjaxResult.error("上传失败!!!");
+        }
+    public  int insertMerchantsFood(MerchantsFood merchantsFood)
+    {
+        MerchantsFood food = new MerchantsFood();
+        food.setMerchantsId(merchantsFood.getMerchantsId());
+        long size = merchantsFoodMapper.selectMerchantsFoodList(food).size();
+
         merchantsFood.setFoodId(size+1);
         return merchantsFoodMapper.insertMerchantsFood(merchantsFood);
+//        return 1;
     }
 
 

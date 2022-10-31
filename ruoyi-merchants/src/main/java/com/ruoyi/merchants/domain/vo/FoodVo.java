@@ -18,6 +18,10 @@ public class FoodVo {
     @Excel(name = "菜品名字")
     private String foodName;
 
+    /** 菜品图片地址 */
+    @Excel(name = "菜品图片地址")
+    private String foodPicture;
+
     public Long getFoodId() {
         return foodId;
     }
@@ -42,6 +46,14 @@ public class FoodVo {
         this.foodName = foodName;
     }
 
+    public String getFoodPicture() {
+        return foodPicture;
+    }
+
+    public void setFoodPicture(String foodPicture) {
+        this.foodPicture = foodPicture;
+    }
+
     public FoodVo(){
 
     }
@@ -56,8 +68,9 @@ public class FoodVo {
     public String toString() {
         return "FoodVo{" +
                 "foodId=" + foodId +
-                ", foodPrice=" + foodPrice +
+                ", foodPrice='" + foodPrice + '\'' +
                 ", foodName='" + foodName + '\'' +
+                ", foodPicture='" + foodPicture + '\'' +
                 '}';
     }
 }

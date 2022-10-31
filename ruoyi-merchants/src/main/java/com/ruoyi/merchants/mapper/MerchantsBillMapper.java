@@ -64,6 +64,6 @@ public interface MerchantsBillMapper
     public int deleteMerchantsBillByIds(Long[] ids);
 
 
-    int updateMerchantsBillStateById(@Param("merchantsId") Long merchantsId,@Param("billId") Long billId);
+    int updateMerchantsBillStateById(MerchantsBill merchantsBill);
 }
 

@@ -35,7 +35,12 @@ public class MerchantsFood extends BaseEntity
     @Excel(name = "菜品名字")
     private String foodName;
 
+    /** 菜品图片地址 */
+    @Excel(name = "菜品图片地址")
     private String foodPicture;
+
+
+
 
     public void setId(Long id) 
     {

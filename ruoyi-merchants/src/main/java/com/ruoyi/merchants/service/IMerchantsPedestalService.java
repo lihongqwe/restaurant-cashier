@@ -49,7 +49,7 @@ public interface IMerchantsPedestalService
      * @param pedestalIds 需要删除的【请填写功能名称】主键集合
      * @return 结果
      */
-    public int deleteMerchantsPedestalByPedestalIds(Long[] pedestalIds);
+    public int deleteMerchantsPedestalByPedestalIds(Long MerchantsId , Long[] pedestalIds);
 
     /**
      * 删除【请填写功能名称】信息

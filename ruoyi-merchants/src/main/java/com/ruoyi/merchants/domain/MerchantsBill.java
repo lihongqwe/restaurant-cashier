@@ -1,13 +1,13 @@
 package com.ruoyi.merchants.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import com.ruoyi.merchants.domain.vo.food;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 【账单】对象 merchants_bill
@@ -38,6 +38,8 @@ public class MerchantsBill extends BaseEntity
     @Excel(name = "菜品名称")
     private String foodName;
 
+//    private List<food> foodName;
+
     /** 账单状态（0:未结算，1:已结算） */
     @Excel(name = "账单状态", readConverterExp = "0=:未结算，1:已结算")
     private Integer billState;
@@ -52,7 +54,7 @@ public class MerchantsBill extends BaseEntity
 
     /** 账单总价格 */
     @Excel(name = "账单总价格")
-    private String billPrice;
+    private BigDecimal billPrice;
 
 
     /** 结算时间 */
@@ -96,15 +98,25 @@ public class MerchantsBill extends BaseEntity
     {
         return pedestalId;
     }
-    public void setFoodName(String foodName) 
+
+//    public List<food> getFoodName() {
+//        return foodName;
+//    }
+//
+//    public void setFoodName(List<food> foodName) {
+//        this.foodName = foodName;
+//    }
+
+        public String getFoodName() {
+        return foodName;
+    }
+
+    public void setFoodName(String foodName)
     {
         this.foodName = foodName;
     }
 
-    public String getFoodName() 
-    {
-        return foodName;
-    }
+
     public void setBillState(Integer billState) 
     {
         this.billState = billState;
@@ -124,11 +136,11 @@ public class MerchantsBill extends BaseEntity
         return paymentMethod;
     }
 
-    public String getBillPrice() {
+    public BigDecimal getBillPrice() {
         return billPrice;
     }
 
-    public void setBillPrice(String billPrice) {
+    public void setBillPrice(BigDecimal billPrice) {
         this.billPrice = billPrice;
     }
 

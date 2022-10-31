@@ -1,43 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.merchants.mapper.MerchantsPedestalMapper">
-    
+
     <resultMap type="com.ruoyi.merchants.domain.MerchantsPedestal" id="MerchantsPedestalResult">
-        <result property="pedestalId"    column="pedestal_id"    />
-        <result property="pedestalState"    column="pedestal_state"    />
-        <result property="merchantsId"    column="merchants_id"    />
-        <result property="createTime"    column="create_time"    />
+        <result property="pedestalId" column="pedestal_id"/>
+        <result property="pedestalState" column="pedestal_state"/>
+        <result property="merchantsId" column="merchants_id"/>
+        <result property="createTime" column="create_time"/>
     </resultMap>
 
     <sql id="selectMerchantsPedestalVo">
-        select pedestal_id, pedestal_state, merchants_id ,create_time from merchants_pedestal
+        select pedestal_id, pedestal_state, merchants_id, create_time
+        from merchants_pedestal
     </sql>
 
-    <select id="selectMerchantsPedestalList" parameterType="com.ruoyi.merchants.domain.MerchantsPedestal" resultMap="MerchantsPedestalResult">
+    <select id="selectMerchantsPedestalList" parameterType="com.ruoyi.merchants.domain.MerchantsPedestal"
+            resultMap="MerchantsPedestalResult">
         <include refid="selectMerchantsPedestalVo"/>
-        <where>  
-            <if test="pedestalState != null "> and pedestal_state = #{pedestalState}</if>
-            <if test="merchantsId != null "> and merchants_id = #{merchantsId}</if>
+        <where>
+            <if test="pedestalId != null ">and pedestal_id = #{pedestalId}</if>
+            <if test="pedestalState != null ">and pedestal_state = #{pedestalState}</if>
+            <if test="merchantsId != null ">and merchants_id = #{merchantsId}</if>
         </where>
     </select>
-    
+
     <select id="selectMerchantsPedestalByPedestalId" parameterType="Long" resultMap="MerchantsPedestalResult">
         <include refid="selectMerchantsPedestalVo"/>
         where pedestal_id = #{pedestalId}
     </select>
-        
+
     <insert id="insertMerchantsPedestal" parameterType="com.ruoyi.merchants.domain.MerchantsPedestal">
         insert into merchants_pedestal(
-            <if test="pedestalId != null">pedestal_id,</if>
-            <if test="pedestalState != null">pedestal_state,</if>
-            <if test="merchantsId != null">merchants_id,</if>
-            )
-            values(
+        <if test="pedestalId != null">pedestal_id,</if>
+        <if test="merchantsId != null">merchants_id,</if>
+        pedestal_state
+        )
+        values(
         <if test="pedestalId != null">#{pedestalId},</if>
-        <if test="pedestalState != null">0,</if>
         <if test="merchantsId != null">#{merchantsId},</if>
+        0
         )
     </insert>
 
@@ -50,13 +53,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where pedestal_id = #{pedestalId}
     </update>
 
+    <update id="updatePedestalState">
+        update merchants_pedestal set pedestal_state=1,create_time=sysdate() where pedestal_id = #{pedestalId}
+    </update>
+
+    <update id="updateState">
+        update merchants_pedestal set pedestal_state=0,create_time=null where pedestal_id = #{pedestalId}
+    </update>
+
     <delete id="deleteMerchantsPedestalByPedestalId" parameterType="Long">
-        delete from merchants_pedestal where pedestal_id = #{pedestalId}
+        delete
+        from merchants_pedestal
+        where pedestal_id = #{pedestalId}
     </delete>
 
     <delete id="deleteMerchantsPedestalByPedestalIds" parameterType="String">
-        delete from merchants_pedestal where pedestal_id in 
-        <foreach item="pedestalId" collection="array" open="(" separator="," close=")">
+        delete from merchants_pedestal where merchants_id = #{MerchantsId} and  pedestal_id in
+        <foreach item="pedestalId" collection="pedestalIds" open="(" separator="," close=")">
             #{pedestalId}
         </foreach>
     </delete>

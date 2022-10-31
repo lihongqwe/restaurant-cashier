@@ -28,7 +28,7 @@ public class MerchantsFoodController extends BaseController {
     private IMerchantsFoodService merchantsFoodService;
 
     //登录用户的id
-//    private final Long userId = getUserId();
+    private final Long userId = getUserId();
 
 
     /**
@@ -38,9 +38,8 @@ public class MerchantsFoodController extends BaseController {
     public TableDataInfo list(MerchantsFood merchantsFood) {
         startPage();
         //添加商家id
-//        merchantsFood.setMerchantsId(userId);
-        Long MerchantsId = 2L;
-        merchantsFood.setMerchantsId(MerchantsId);
+
+        merchantsFood.setMerchantsId(userId);
         List<MerchantsFood> list = merchantsFoodService.selectMerchantsFoodList(merchantsFood);
         List<FoodVo> collect = list.stream().map(food -> {
                     FoodVo foodVo = new FoodVo();
@@ -78,12 +77,10 @@ public class MerchantsFoodController extends BaseController {
     @PostMapping
     public AjaxResult add(@RequestParam("avatar") MultipartFile fileUpload, @RequestParam("foodName") String foodName,
                           @RequestParam("foodPrice") BigDecimal foodPrice) {
-        Long MerchantsId = 2L;
         MerchantsFood merchantsFood = new MerchantsFood();
-        merchantsFood.setMerchantsId(MerchantsId);
+        merchantsFood.setMerchantsId(userId);
         merchantsFood.setFoodName(foodName);
         merchantsFood.setFoodPrice(foodPrice);
-
         return merchantsFoodService.insertMerchantsFood(fileUpload, merchantsFood);
     }
 
@@ -92,7 +89,7 @@ public class MerchantsFoodController extends BaseController {
      */
     @PutMapping
     public AjaxResult edit(@RequestBody MerchantsFood merchantsFood) {
-//        merchantsFood.setMerchantsId(userId);
+        merchantsFood.setMerchantsId(userId);
         return toAjax(merchantsFoodService.updateMerchantsFood(merchantsFood));
     }
 
@@ -101,8 +98,6 @@ public class MerchantsFoodController extends BaseController {
      */
     @GetMapping("/{foodIds}")
     public AjaxResult remove(@PathVariable Long[] foodIds) {
-        //      Long MerchantsId=  merchantsFood.setMerchantsId(userId);
-        Long MerchantsId = 2L;
-        return toAjax(merchantsFoodService.deleteMerchantsFoodByIds(MerchantsId, foodIds));
+        return toAjax(merchantsFoodService.deleteMerchantsFoodByIds(userId, foodIds));
     }
 }

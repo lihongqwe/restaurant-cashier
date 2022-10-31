@@ -1,11 +1,22 @@
 package com.ruoyi.merchants.service.impl;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
+
+import ch.qos.logback.core.joran.util.beans.BeanUtil;
+import com.ruoyi.merchants.domain.MerchantsPedestal;
+import com.ruoyi.merchants.domain.vo.BillFareVo;
+import com.ruoyi.merchants.domain.vo.food;
+import com.ruoyi.merchants.mapper.MerchantsPedestalMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.merchants.mapper.MerchantsBillMapper;
 import com.ruoyi.merchants.domain.MerchantsBill;
 import com.ruoyi.merchants.service.IMerchantsBillService;
+
+import static com.ruoyi.common.utils.SecurityUtils.getUserId;
 
 /**
  * 【请填写功能名称】Service业务层处理
@@ -18,6 +29,11 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
 {
     @Autowired
     private MerchantsBillMapper merchantsBillMapper;
+
+    @Autowired
+    private MerchantsPedestalMapper merchantsPedestalMapper;
+
+    private final Long userId = getUserId();
 
     /**
      * 查询【请填写功能名称】
@@ -44,9 +60,36 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
     }
 
     @Override
-    public int payBill(Long merchantsId, Long billId) {
+    public int payBill( MerchantsBill merchantsBill) {
+        //修改台座状态
+        merchantsPedestalMapper.updateState(merchantsBill.getPedestalId());
+        return merchantsBillMapper.updateMerchantsBillStateById(merchantsBill);
+    }
 
-        return merchantsBillMapper.updateMerchantsBillStateById(merchantsId,billId);
+    /**
+     * 下单
+     * @param billFareVo
+     * @return
+     */
+    @Override
+    public int PlaceTheOrder(BillFareVo billFareVo) {
+
+        MerchantsBill merchantsBill = new MerchantsBill();
+        merchantsBill.setPedestalId(billFareVo.getPedestalId());
+        Long billId= (long) (merchantsBillMapper.selectMerchantsBillList(merchantsBill).size() + 1);
+        merchantsBill.setBillId(billId);
+        List<food> foodName = billFareVo.getFoodName();
+        merchantsBill.setMerchantsId(userId);
+        merchantsBill.setFoodName(foodName.toString());
+        float  price = 0;
+        for (food food : billFareVo.getFoodName()){
+             price += food.getPrice();
+        }
+        merchantsBill.setBillPrice(BigDecimal.valueOf(price));
+        //修改台座状态
+        merchantsPedestalMapper.updatePedestalState(merchantsBill.getPedestalId());
+        return merchantsBillMapper.insertMerchantsBill(merchantsBill);
+
     }
 
     /**

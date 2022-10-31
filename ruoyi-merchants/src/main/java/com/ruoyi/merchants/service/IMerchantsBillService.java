@@ -2,6 +2,7 @@ package com.ruoyi.merchants.service;
 
 import java.util.List;
 import com.ruoyi.merchants.domain.MerchantsBill;
+import com.ruoyi.merchants.domain.vo.BillFareVo;
 
 /**
  * 【请填写功能名称】Service接口
@@ -59,5 +60,18 @@ public interface IMerchantsBillService
      */
     public int deleteMerchantsBillById(Long id);
 
-    int payBill(Long merchantsId, Long billId);
+    /**
+     * 支付
+
+     * @return
+     */
+    int payBill(MerchantsBill merchantsBill);
+
+
+    /**
+     * 下单
+     * @param billFareVo
+     * @return
+     */
+    int  PlaceTheOrder(BillFareVo billFareVo);
 }

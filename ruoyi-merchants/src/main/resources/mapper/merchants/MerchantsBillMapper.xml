@@ -1,62 +1,77 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.merchants.mapper.MerchantsBillMapper">
-    
+
     <resultMap type="com.ruoyi.merchants.domain.MerchantsBill" id="MerchantsBillResult">
-        <result property="id"    column="id"    />
-        <result property="merchantsId"    column="merchants_id"    />
-        <result property="billId"    column="bill_id"    />
-        <result property="pedestalId"    column="pedestal_id"    />
-        <result property="foodName"    column="food_name"    />
-        <result property="billState"    column="bill_state"    />
-        <result property="paymentMethod"    column="payment_method"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="billPrice"    column="bill_price"    />
-        <result property="checkOutTime"    column="check_out_time"    />
+        <result property="id" column="id"/>
+        <result property="merchantsId" column="merchants_id"/>
+        <result property="billId" column="bill_id"/>
+        <result property="pedestalId" column="pedestal_id"/>
+        <result property="foodName" column="food_name"/>
+        <result property="billState" column="bill_state"/>
+        <result property="paymentMethod" column="payment_method"/>
+        <result property="createTime" column="create_time"/>
+        <result property="billPrice" column="bill_price"/>
+        <result property="checkOutTime" column="check_out_time"/>
     </resultMap>
 
     <sql id="selectMerchantsBillVo">
-        select id, merchants_id, bill_id, pedestal_id, food_name, bill_state, payment_method ,create_time,bill_price,check_out_time  from merchants_bill
+        select id,
+               merchants_id,
+               bill_id,
+               pedestal_id,
+               food_name,
+               bill_state,
+               payment_method,
+               create_time,
+               bill_price,
+               check_out_time
+        from merchants_bill
     </sql>
 
-    <select id="selectMerchantsBillList" parameterType="com.ruoyi.merchants.domain.MerchantsBill" resultMap="MerchantsBillResult">
+    <select id="selectMerchantsBillList" parameterType="com.ruoyi.merchants.domain.MerchantsBill"
+            resultMap="MerchantsBillResult">
         <include refid="selectMerchantsBillVo"/>
-        <where>  
-            <if test="merchantsId != null "> and merchants_id = #{merchantsId}</if>
-            <if test="billId != null "> and bill_id = #{billId}</if>
-            <if test="pedestalId != null "> and pedestal_id = #{pedestalId}</if>
-            <if test="billState != null "> and bill_state = #{billState}</if>
-            <if test="paymentMethod != null  and paymentMethod != ''"> and payment_method = #{paymentMethod}</if>
+        <where>
+            <if test="merchantsId != null ">and merchants_id = #{merchantsId}</if>
+            <if test="billId != null ">and bill_id = #{billId}</if>
+            <if test="pedestalId != null ">and pedestal_id = #{pedestalId}</if>
+            <if test="billState != null ">and bill_state = #{billState}</if>
+            <if test="paymentMethod != null  and paymentMethod != ''">and payment_method = #{paymentMethod}</if>
         </where>
     </select>
-    
+
     <select id="selectMerchantsBillById" parameterType="Long" resultMap="MerchantsBillResult">
         <include refid="selectMerchantsBillVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertMerchantsBill" parameterType="com.ruoyi.merchants.domain.MerchantsBill">
         insert into merchants_bill
-            ( <if test="id != null">id,</if>
-            <if test="merchantsId != null">merchants_id,</if>
-            <if test="billId != null">bill_id,</if>
-            <if test="pedestalId != null">pedestal_id,</if>
-            <if test="foodName != null and foodName != ''">food_name,</if>
-            <if test="billState != null">bill_state,</if>
-            <if test="paymentMethod != null">payment_method,</if>
-            <if test="billPrice != null">bill_price,</if>
-            create_time)
-           values (<if test="id != null">#{id},</if>
-            <if test="merchantsId != null">#{merchantsId},</if>
-            <if test="billId != null">#{billId},</if>
-            <if test="pedestalId != null">#{pedestalId},</if>
-            <if test="foodName != null and foodName != ''">#{foodName},</if>
-            <if test="billState != null">#{billState},</if>
-            <if test="paymentMethod != null">#{paymentMethod},</if>
-            sysdate()
-            )
+        (
+        <if test="id != null">id,</if>
+        <if test="merchantsId != null">merchants_id,</if>
+        <if test="billId != null">bill_id,</if>
+        <if test="pedestalId != null">pedestal_id,</if>
+        <if test="foodName != null and foodName != ''">food_name,</if>
+        <if test="paymentMethod != null">payment_method,</if>
+        <if test="billPrice != null">bill_price,</if>
+        bill_state,
+        create_time)
+        values (
+        <if test="id != null">#{id},</if>
+        <if test="merchantsId != null">#{merchantsId},</if>
+        <if test="billId != null">#{billId},</if>
+        <if test="pedestalId != null">#{pedestalId},</if>
+        <if test="foodName != null and foodName != ''">#{foodName},</if>
+        <if test="billState != null">#{billState},</if>
+        <if test="paymentMethod != null">#{paymentMethod},</if>
+        <if test="billPrice != null">#{billPrice},</if>
+        0,
+        sysdate()
+        )
 
     </insert>
 
@@ -73,17 +88,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-    <update id="updateMerchantsBillStateById" >
-        update  merchants_bill  set bill_state = 1 , check_out_time=sysdate()
-            where bill_id=#{billId} and merchants_id = #{merchantsId}
+    <update id="updateMerchantsBillStateById">
+        update merchants_bill
+        set bill_state  = 1,
+            payment_method=#{paymentMethod},
+            check_out_time=sysdate()
+        where bill_id = #{billId}
+          and merchants_id = #{merchantsId}
     </update>
 
     <delete id="deleteMerchantsBillById" parameterType="Long">
-        delete from merchants_bill where id = #{id}
+        delete
+        from merchants_bill
+        where id = #{id}
     </delete>
 
     <delete id="deleteMerchantsBillByIds" parameterType="String">
-        delete from merchants_bill where id in 
+        delete from merchants_bill where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

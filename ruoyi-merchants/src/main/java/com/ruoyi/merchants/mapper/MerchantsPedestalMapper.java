@@ -3,6 +3,8 @@ package com.ruoyi.merchants.mapper;
 import java.util.List;
 import com.ruoyi.merchants.domain.MerchantsPedestal;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 
 /**
  * 【请填写功能名称】Mapper接口
@@ -30,6 +32,10 @@ public interface MerchantsPedestalMapper
      */
     public List<MerchantsPedestal> selectMerchantsPedestalList(MerchantsPedestal merchantsPedestal);
 
+    /**
+     * 修改台座状态
+     */
+    public int updatePedestalState(Long pedestalId);
     /**
      * 新增【请填写功能名称】
      * 
@@ -60,5 +66,7 @@ public interface MerchantsPedestalMapper
      * @param pedestalIds 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteMerchantsPedestalByPedestalIds(Long[] pedestalIds);
+    public int deleteMerchantsPedestalByPedestalIds(@Param("MerchantsId") Long MerchantsId ,@Param("pedestalIds") Long[] pedestalIds);
+
+    void updateState(Long pedestalId);
 }
