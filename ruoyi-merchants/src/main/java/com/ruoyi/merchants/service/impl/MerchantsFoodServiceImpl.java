@@ -2,6 +2,8 @@ package com.ruoyi.merchants.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,6 +56,15 @@ public class MerchantsFoodServiceImpl implements IMerchantsFoodService
     @Override
     public List<MerchantsFood> selectMerchantsFoodList(MerchantsFood merchantsFood)
     {
+        Long[] foodIds = merchantsFood.getFoodIds();
+        List<MerchantsFood> foodList=new ArrayList<>();
+        if(foodIds!=null){
+            for(Long foodId : foodIds){
+                MerchantsFood food=merchantsFoodMapper.getFoodIds(foodId);
+                foodList.add(food);
+            }
+            return foodList;
+        }
         return merchantsFoodMapper.selectMerchantsFoodList(merchantsFood);
     }
 

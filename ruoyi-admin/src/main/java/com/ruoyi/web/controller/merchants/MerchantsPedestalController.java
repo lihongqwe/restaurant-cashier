@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.bean.BeanUtils;
 import com.ruoyi.merchants.domain.vo.PedestalVo;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,7 +38,6 @@ public class MerchantsPedestalController extends BaseController
 {
     @Autowired
     private IMerchantsPedestalService merchantsPedestalService;
-    private final Long userId = getUserId();
 
     /**
      * 查询【台座】列表
@@ -46,7 +46,7 @@ public class MerchantsPedestalController extends BaseController
     public TableDataInfo list(MerchantsPedestal merchantsPedestal)
     {
         startPage();
-        merchantsPedestal.setMerchantsId(userId);
+        merchantsPedestal.setMerchantsId(SecurityUtils.getUserId());
         List<MerchantsPedestal> list = merchantsPedestalService.selectMerchantsPedestalList(merchantsPedestal);
         List<PedestalVo> collect = list.stream().map(pedestal -> {
             PedestalVo pedestalVo = new PedestalVo();
@@ -83,7 +83,7 @@ public class MerchantsPedestalController extends BaseController
     public AjaxResult add(@RequestBody MerchantsPedestal merchantsPedestal)
     {
 
-        merchantsPedestal.setMerchantsId(userId);
+        merchantsPedestal.setMerchantsId(SecurityUtils.getUserId());
         int i = merchantsPedestalService.insertMerchantsPedestal(merchantsPedestal);
         if(i>0){
             return  AjaxResult.success();
@@ -106,7 +106,7 @@ public class MerchantsPedestalController extends BaseController
 	@DeleteMapping("/{pedestalIds}")
     public AjaxResult remove(@PathVariable Long[] pedestalIds)
     {
-        return toAjax(merchantsPedestalService.deleteMerchantsPedestalByPedestalIds(userId,pedestalIds));
+        return toAjax(merchantsPedestalService.deleteMerchantsPedestalByPedestalIds(SecurityUtils.getUserId(),pedestalIds));
     }
 
 

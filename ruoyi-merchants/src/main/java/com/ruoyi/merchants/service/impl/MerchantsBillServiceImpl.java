@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 import ch.qos.logback.core.joran.util.beans.BeanUtil;
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.merchants.domain.MerchantsPedestal;
 import com.ruoyi.merchants.domain.vo.BillFareVo;
 import com.ruoyi.merchants.domain.vo.food;
@@ -33,7 +34,6 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
     @Autowired
     private MerchantsPedestalMapper merchantsPedestalMapper;
 
-    private final Long userId = getUserId();
 
     /**
      * 查询【请填写功能名称】
@@ -79,7 +79,7 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
         Long billId= (long) (merchantsBillMapper.selectMerchantsBillList(merchantsBill).size() + 1);
         merchantsBill.setBillId(billId);
         List<food> foodName = billFareVo.getFoodName();
-        merchantsBill.setMerchantsId(userId);
+        merchantsBill.setMerchantsId(SecurityUtils.getUserId());
         merchantsBill.setFoodName(foodName.toString());
         float  price = 0;
         for (food food : billFareVo.getFoodName()){

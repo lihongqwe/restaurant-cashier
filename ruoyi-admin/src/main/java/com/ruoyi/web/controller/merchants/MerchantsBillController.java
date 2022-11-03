@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSON;
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.merchants.domain.vo.BillFareVo;
 import com.ruoyi.merchants.domain.vo.BillVo;
@@ -38,11 +39,12 @@ import com.ruoyi.common.core.page.TableDataInfo;
 @RestController
 @RequestMapping("/merchants/bill")
 public class MerchantsBillController extends BaseController {
+
     @Autowired
     private IMerchantsBillService merchantsBillService;
 
     //登录用户的id
-    private final Long userId = getUserId();
+
 
     /**
      * 查询【账单】列表
@@ -50,7 +52,7 @@ public class MerchantsBillController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(MerchantsBill merchantsBill) {
         startPage();
-        merchantsBill.setMerchantsId(userId);
+        merchantsBill.setMerchantsId( SecurityUtils.getUserId());
         List<MerchantsBill> list = merchantsBillService.selectMerchantsBillList(merchantsBill);
         List<BillVo> collect = list.stream().map(bill -> {
                     BillVo billVo = new BillVo();
@@ -73,7 +75,7 @@ public class MerchantsBillController extends BaseController {
     @PostMapping(value ="/pay")
     public AjaxResult pay(@RequestBody MerchantsBill merchantsBill ){
 
-        merchantsBill.setMerchantsId(userId);
+        merchantsBill.setMerchantsId(SecurityUtils.getUserId());
         return toAjax(merchantsBillService.payBill(merchantsBill));
     }
 

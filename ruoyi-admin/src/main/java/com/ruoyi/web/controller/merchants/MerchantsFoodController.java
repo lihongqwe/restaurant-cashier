@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.merchants.domain.vo.FoodVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,6 @@ public class MerchantsFoodController extends BaseController {
     @Autowired
     private IMerchantsFoodService merchantsFoodService;
 
-    //登录用户的id
-    private final Long userId = getUserId();
-
-
     /**
      * 查询【菜单】列表
      */
@@ -38,8 +35,9 @@ public class MerchantsFoodController extends BaseController {
     public TableDataInfo list(MerchantsFood merchantsFood) {
         startPage();
         //添加商家id
-
-        merchantsFood.setMerchantsId(userId);
+//        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
+        merchantsFood.setMerchantsId(2L);
+        System.out.println("前端传来的数据"+merchantsFood);
         List<MerchantsFood> list = merchantsFoodService.selectMerchantsFoodList(merchantsFood);
         List<FoodVo> collect = list.stream().map(food -> {
                     FoodVo foodVo = new FoodVo();
@@ -78,7 +76,7 @@ public class MerchantsFoodController extends BaseController {
     public AjaxResult add(@RequestParam("avatar") MultipartFile fileUpload, @RequestParam("foodName") String foodName,
                           @RequestParam("foodPrice") BigDecimal foodPrice) {
         MerchantsFood merchantsFood = new MerchantsFood();
-        merchantsFood.setMerchantsId(userId);
+        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
         merchantsFood.setFoodName(foodName);
         merchantsFood.setFoodPrice(foodPrice);
         return merchantsFoodService.insertMerchantsFood(fileUpload, merchantsFood);
@@ -89,7 +87,7 @@ public class MerchantsFoodController extends BaseController {
      */
     @PutMapping
     public AjaxResult edit(@RequestBody MerchantsFood merchantsFood) {
-        merchantsFood.setMerchantsId(userId);
+        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
         return toAjax(merchantsFoodService.updateMerchantsFood(merchantsFood));
     }
 
@@ -98,6 +96,6 @@ public class MerchantsFoodController extends BaseController {
      */
     @GetMapping("/{foodIds}")
     public AjaxResult remove(@PathVariable Long[] foodIds) {
-        return toAjax(merchantsFoodService.deleteMerchantsFoodByIds(userId, foodIds));
+        return toAjax(merchantsFoodService.deleteMerchantsFoodByIds(SecurityUtils.getUserId(), foodIds));
     }
 }

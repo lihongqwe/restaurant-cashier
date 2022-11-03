@@ -31,7 +31,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectMerchantsFoodVo"/>
         where id = #{id}
     </select>
-        
+
+
+    <select id="getFoodIds" resultMap="MerchantsFoodResult">
+        select * from merchants_food where food_id=#{foodId}
+    </select>
+
     <insert id="insertMerchantsFood" parameterType="com.ruoyi.merchants.domain.MerchantsFood">
         insert into merchants_food
         <trim prefix="(" suffix=")" suffixOverrides=",">

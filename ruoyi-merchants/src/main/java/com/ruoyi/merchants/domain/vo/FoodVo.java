@@ -3,6 +3,7 @@ package com.ruoyi.merchants.domain.vo;
 import com.ruoyi.common.annotation.Excel;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class FoodVo {
     /** 菜品名字 */
@@ -13,7 +14,6 @@ public class FoodVo {
     @Excel(name = "菜品价格")
     private String foodPrice;
 
-
     /** 菜品名字 */
     @Excel(name = "菜品名字")
     private String foodName;
@@ -21,6 +21,8 @@ public class FoodVo {
     /** 菜品图片地址 */
     @Excel(name = "菜品图片地址")
     private String foodPicture;
+
+
 
     public Long getFoodId() {
         return foodId;

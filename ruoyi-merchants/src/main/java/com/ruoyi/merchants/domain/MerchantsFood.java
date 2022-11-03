@@ -1,6 +1,8 @@
 package com.ruoyi.merchants.domain;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -39,10 +41,18 @@ public class MerchantsFood extends BaseEntity
     @Excel(name = "菜品图片地址")
     private String foodPicture;
 
+    private Long[]  foodIds;
 
 
+    public Long[]  getFoodIds() {
+        return foodIds;
+    }
 
-    public void setId(Long id) 
+    public void setFoodIds(Long[]  foodIds) {
+        this.foodIds = foodIds;
+    }
+
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -106,6 +116,7 @@ public class MerchantsFood extends BaseEntity
             .append("foodPrice", getFoodPrice())
             .append("foodName", getFoodName())
             .append("foodPicture", getFoodPicture())
+            .append("foodIds", getFoodIds())
             .toString();
     }
 }

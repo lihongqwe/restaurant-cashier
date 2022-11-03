@@ -62,4 +62,8 @@ public interface MerchantsFoodMapper
      * @return 结果
      */
     public int deleteMerchantsFoodByIds(@Param("MerchantsId") Long MerchantsId,@Param("foodIds")  Long[] foodIds);
+
+
+    MerchantsFood getFoodIds(Long foodId);
+
 }
