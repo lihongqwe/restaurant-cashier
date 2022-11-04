@@ -43,9 +43,8 @@ public class MerchantsPedestalController extends BaseController
      * 查询【台座】列表
      */
     @GetMapping("/list")
-    public TableDataInfo list(MerchantsPedestal merchantsPedestal)
+    public AjaxResult list(MerchantsPedestal merchantsPedestal)
     {
-        startPage();
         merchantsPedestal.setMerchantsId(SecurityUtils.getUserId());
         List<MerchantsPedestal> list = merchantsPedestalService.selectMerchantsPedestalList(merchantsPedestal);
         List<PedestalVo> collect = list.stream().map(pedestal -> {
@@ -53,7 +52,7 @@ public class MerchantsPedestalController extends BaseController
             BeanUtils.copyProperties(pedestal, pedestalVo);
             return pedestalVo;
         }).collect(Collectors.toList());
-        return getDataTable(collect);
+        return AjaxResult.success(collect);
     }
 
     /**
@@ -84,6 +83,7 @@ public class MerchantsPedestalController extends BaseController
     {
 
         merchantsPedestal.setMerchantsId(SecurityUtils.getUserId());
+//        merchantsPedestal.setMerchantsId(2L);
         int i = merchantsPedestalService.insertMerchantsPedestal(merchantsPedestal);
         if(i>0){
             return  AjaxResult.success();

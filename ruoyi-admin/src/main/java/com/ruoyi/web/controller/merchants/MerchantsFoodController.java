@@ -32,12 +32,9 @@ public class MerchantsFoodController extends BaseController {
      * 查询【菜单】列表
      */
     @GetMapping("/list")
-    public TableDataInfo list(MerchantsFood merchantsFood) {
-        startPage();
+    public AjaxResult list(MerchantsFood merchantsFood) {
         //添加商家id
-//        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
-        merchantsFood.setMerchantsId(2L);
-        System.out.println("前端传来的数据"+merchantsFood);
+        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
         List<MerchantsFood> list = merchantsFoodService.selectMerchantsFoodList(merchantsFood);
         List<FoodVo> collect = list.stream().map(food -> {
                     FoodVo foodVo = new FoodVo();
@@ -46,7 +43,7 @@ public class MerchantsFoodController extends BaseController {
                     return foodVo;
                 }
         ).collect(Collectors.toList());
-        return getDataTable(collect);
+        return AjaxResult.success(collect);
     }
 
 //    /**
