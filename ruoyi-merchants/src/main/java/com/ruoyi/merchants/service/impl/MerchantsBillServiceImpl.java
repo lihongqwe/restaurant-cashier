@@ -56,6 +56,7 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
     @Override
     public List<MerchantsBill> selectMerchantsBillList(MerchantsBill merchantsBill)
     {
+
         return merchantsBillMapper.selectMerchantsBillList(merchantsBill);
     }
 
@@ -68,18 +69,16 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
 
     /**
      * 下单
-     * @param billFareVo
-     * @return
      */
     @Override
     public int PlaceTheOrder(BillFareVo billFareVo) {
-
         MerchantsBill merchantsBill = new MerchantsBill();
         merchantsBill.setPedestalId(billFareVo.getPedestalId());
         Long billId= (long) (merchantsBillMapper.selectMerchantsBillList(merchantsBill).size() + 1);
         merchantsBill.setBillId(billId);
         List<food> foodName = billFareVo.getFoodName();
-        merchantsBill.setMerchantsId(SecurityUtils.getUserId());
+        merchantsBill.setMerchantsId(2L);
+//        merchantsBill.setMerchantsId(SecurityUtils.getUserId());
         merchantsBill.setFoodName(foodName.toString());
         float  price = 0;
         for (food food : billFareVo.getFoodName()){

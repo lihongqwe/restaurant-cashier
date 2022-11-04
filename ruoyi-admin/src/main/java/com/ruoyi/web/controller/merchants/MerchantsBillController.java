@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.merchants;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,8 +52,11 @@ public class MerchantsBillController extends BaseController {
      */
     @GetMapping("/list")
     public TableDataInfo list(MerchantsBill merchantsBill) {
+        List<MerchantsBill> lists = merchantsBillService.selectMerchantsBillList(merchantsBill);
+
         startPage();
-        merchantsBill.setMerchantsId( SecurityUtils.getUserId());
+//        merchantsBill.setMerchantsId( SecurityUtils.getUserId());
+        merchantsBill.setMerchantsId(2L);
         List<MerchantsBill> list = merchantsBillService.selectMerchantsBillList(merchantsBill);
         List<BillVo> collect = list.stream().map(bill -> {
                     BillVo billVo = new BillVo();
@@ -65,7 +69,9 @@ public class MerchantsBillController extends BaseController {
                     return billVo;
                 }
         ).collect(Collectors.toList());
-        return getDataTable(collect);
+        TableDataInfo dataTable = getDataTable(collect);
+        dataTable.setTotal(lists.size());
+        return dataTable;
     }
 
 

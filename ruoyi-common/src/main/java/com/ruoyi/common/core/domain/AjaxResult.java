@@ -23,6 +23,8 @@ public class AjaxResult extends HashMap<String, Object>
     /** 数据对象 */
     public static final String DATA_TAG = "data";
 
+
+
     /**
      * 初始化一个新创建的 AjaxResult 对象，使其表示一个空消息。
      */
@@ -75,6 +77,11 @@ public class AjaxResult extends HashMap<String, Object>
      * @return 成功消息
      */
     public static AjaxResult success(Object data)
+    {
+        return AjaxResult.success("操作成功", data);
+    }
+
+    public static AjaxResult success(Object data,int total)
     {
         return AjaxResult.success("操作成功", data);
     }
