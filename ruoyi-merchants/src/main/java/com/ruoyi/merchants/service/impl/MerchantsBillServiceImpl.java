@@ -44,7 +44,7 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
     @Override
     public MerchantsBill selectMerchantsBillById(Long id)
     {
-        return merchantsBillMapper.selectMerchantsBillById(id);
+        return null;
     }
 
     /**
@@ -74,21 +74,22 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
     public int PlaceTheOrder(BillFareVo billFareVo) {
         MerchantsBill merchantsBill = new MerchantsBill();
         merchantsBill.setPedestalId(billFareVo.getPedestalId());
-        Long billId= (long) (merchantsBillMapper.selectMerchantsBillList(merchantsBill).size() + 1);
+        Long billId= (long) (merchantsBillMapper.selectMerchantsBillById(SecurityUtils.getUserId()).size() + 1);
         merchantsBill.setBillId(billId);
         List<food> foodName = billFareVo.getFoodName();
         merchantsBill.setMerchantsId(2L);
 //        merchantsBill.setMerchantsId(SecurityUtils.getUserId());
         merchantsBill.setFoodName(foodName.toString());
+        //计算账单总价钱
         float  price = 0;
         for (food food : billFareVo.getFoodName()){
-             price += food.getPrice();
+            int number = food.getNumber();
+            price += food.getPrice()*number;
         }
-        merchantsBill.setBillPrice(BigDecimal.valueOf(price));
+        merchantsBill.setBillPrice(price);
         //修改台座状态
         merchantsPedestalMapper.updatePedestalState(merchantsBill.getPedestalId());
         return merchantsBillMapper.insertMerchantsBill(merchantsBill);
-
     }
 
     /**

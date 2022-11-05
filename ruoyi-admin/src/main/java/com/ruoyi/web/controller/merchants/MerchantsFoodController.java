@@ -34,58 +34,47 @@ public class MerchantsFoodController extends BaseController {
     @GetMapping("/list")
     public AjaxResult list(MerchantsFood merchantsFood) {
         //添加商家id
-        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
+//        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
+        merchantsFood.setMerchantsId(2L);
+        System.out.println(merchantsFood);
+
         List<MerchantsFood> list = merchantsFoodService.selectMerchantsFoodList(merchantsFood);
         List<FoodVo> collect = list.stream().map(food -> {
                     FoodVo foodVo = new FoodVo();
                     BeanUtils.copyProperties(food, foodVo);
-                    foodVo.setFoodPrice(food.getFoodPrice().toString() + "元");
+                    foodVo.setFoodPrice(food.getFoodPrice());
                     return foodVo;
                 }
         ).collect(Collectors.toList());
         return AjaxResult.success(collect);
     }
 
-//    /**
-//     * 导出【菜单】列表
-//     */
-//    @PostMapping("/export")
-//    public void export(HttpServletResponse response, MerchantsFood merchantsFood)
-//    {
-//        List<MerchantsFood> list = merchantsFoodService.selectMerchantsFoodList(merchantsFood);
-//        ExcelUtil<MerchantsFood> util = new ExcelUtil<MerchantsFood>(MerchantsFood.class);
-//        util.exportExcel(response, list, "【菜单】数据");
-//    }
-//
-//    /**
-//     * 获取【菜单】详细信息
-//     */
-//    @GetMapping(value = "/{id}")
-//    public AjaxResult getInfo(@PathVariable("id") Long id)
-//    {
-//        return AjaxResult.success(merchantsFoodService.selectMerchantsFoodById(id));
-//    }
 
     /**
      * 新增【菜单】
      */
     @PostMapping
     public AjaxResult add(@RequestParam("avatar") MultipartFile fileUpload, @RequestParam("foodName") String foodName,
-                          @RequestParam("foodPrice") BigDecimal foodPrice) {
+                          @RequestParam("foodPrice") float foodPrice) {
         MerchantsFood merchantsFood = new MerchantsFood();
         merchantsFood.setMerchantsId(SecurityUtils.getUserId());
         merchantsFood.setFoodName(foodName);
         merchantsFood.setFoodPrice(foodPrice);
-        return merchantsFoodService.insertMerchantsFood(fileUpload, merchantsFood);
+        return toAjax(merchantsFoodService.insertMerchantsFood(fileUpload, merchantsFood));
     }
 
     /**
      * 修改【菜单】
      */
     @PutMapping
-    public AjaxResult edit(@RequestBody MerchantsFood merchantsFood) {
+    public AjaxResult edit(@RequestParam("avatar") MultipartFile fileUpload, @RequestParam("foodName") String foodName,
+                           @RequestParam("foodPrice") float foodPrice,@RequestParam("foodId") Long foodId) {
+        MerchantsFood merchantsFood = new MerchantsFood();
         merchantsFood.setMerchantsId(SecurityUtils.getUserId());
-        return toAjax(merchantsFoodService.updateMerchantsFood(merchantsFood));
+        merchantsFood.setFoodName(foodName);
+        merchantsFood.setFoodPrice(foodPrice);
+        merchantsFood.setFoodId(foodId);
+        return toAjax(merchantsFoodService.updateMerchantsFood(fileUpload,merchantsFood));
     }
 
     /**

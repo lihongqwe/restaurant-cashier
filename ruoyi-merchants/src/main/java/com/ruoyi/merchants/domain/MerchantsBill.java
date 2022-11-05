@@ -54,7 +54,7 @@ public class MerchantsBill extends BaseEntity
 
     /** 账单总价格 */
     @Excel(name = "账单总价格")
-    private BigDecimal billPrice;
+    private float billPrice;
 
 
     /** 结算时间 */
@@ -136,11 +136,11 @@ public class MerchantsBill extends BaseEntity
         return paymentMethod;
     }
 
-    public BigDecimal getBillPrice() {
+    public float getBillPrice() {
         return billPrice;
     }
 
-    public void setBillPrice(BigDecimal billPrice) {
+    public void setBillPrice(float billPrice) {
         this.billPrice = billPrice;
     }
 

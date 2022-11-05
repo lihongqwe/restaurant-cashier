@@ -6,9 +6,6 @@ import java.util.List;
 
 public class BillFareVo {
 
-    /** 账单id */
-    @Excel(name = "账单id")
-    private Long billId;
 
     /** 台座id */
     @Excel(name = "台座id")
@@ -19,13 +16,7 @@ public class BillFareVo {
     private List<food> foodName;
 
 
-    public Long getBillId() {
-        return billId;
-    }
 
-    public void setBillId(Long billId) {
-        this.billId = billId;
-    }
 
     public Long getPedestalId() {
         return pedestalId;
@@ -46,7 +37,6 @@ public class BillFareVo {
     @Override
     public String toString() {
         return "BillFareVo{" +
-                "billId=" + billId +
                 ", pedestalId=" + pedestalId +
                 ", foodName=" + foodName +
                 '}';

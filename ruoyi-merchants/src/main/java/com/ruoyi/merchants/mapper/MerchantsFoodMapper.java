@@ -21,7 +21,7 @@ public interface MerchantsFoodMapper
      * @param id 【请填写功能名称】主键
      * @return 【请填写功能名称】
      */
-    public MerchantsFood selectMerchantsFoodById(Long id);
+    public List<MerchantsFood> selectMerchantsFoodById(Long id);
 
     /**
      * 查询【请填写功能名称】列表

@@ -36,16 +36,18 @@ public interface IMerchantsFoodService
      * @param merchantsFood 【请填写功能名称】
      * @return 结果
      */
-    public AjaxResult insertMerchantsFood(MultipartFile fileUpload, MerchantsFood merchantsFood);
+    public int insertMerchantsFood(MultipartFile fileUpload, MerchantsFood merchantsFood);
 //    public AjaxResult insertMerchantsFood(MultipartFile fileUpload);
 
     /**
      * 修改【请填写功能名称】
      * 
+     *
+     * @param fileUpload
      * @param merchantsFood 【请填写功能名称】
      * @return 结果
      */
-    public int updateMerchantsFood(MerchantsFood merchantsFood);
+    public int updateMerchantsFood(MultipartFile fileUpload, MerchantsFood merchantsFood);
 
     /**
      * 批量删除【请填写功能名称】

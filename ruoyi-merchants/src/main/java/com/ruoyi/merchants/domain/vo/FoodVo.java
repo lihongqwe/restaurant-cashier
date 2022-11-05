@@ -12,7 +12,7 @@ public class FoodVo {
 
     /** 菜品价格 */
     @Excel(name = "菜品价格")
-    private String foodPrice;
+    private float foodPrice;
 
     /** 菜品名字 */
     @Excel(name = "菜品名字")
@@ -32,11 +32,11 @@ public class FoodVo {
         this.foodId = foodId;
     }
 
-    public String getFoodPrice() {
+    public float getFoodPrice() {
         return foodPrice;
     }
 
-    public void setFoodPrice(String foodPrice) {
+    public void setFoodPrice(float foodPrice) {
         this.foodPrice = foodPrice;
     }
 
@@ -60,7 +60,7 @@ public class FoodVo {
 
     }
 
-    public FoodVo(Long foodId, String foodPrice, String foodName) {
+    public FoodVo(Long foodId, float foodPrice, String foodName) {
         this.foodId = foodId;
         this.foodPrice = foodPrice;
         this.foodName = foodName;

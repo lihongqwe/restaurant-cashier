@@ -53,7 +53,6 @@ public class MerchantsBillController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(MerchantsBill merchantsBill) {
         List<MerchantsBill> lists = merchantsBillService.selectMerchantsBillList(merchantsBill);
-
         startPage();
 //        merchantsBill.setMerchantsId( SecurityUtils.getUserId());
         merchantsBill.setMerchantsId(2L);
@@ -65,9 +64,10 @@ public class MerchantsBillController extends BaseController {
                             .replace("=",":");
                     List<food> food=  JSONUtil.toList(foodName,food.class);
                     billVo.setFoodName(food);
-                    billVo.setBillPrice(bill.getBillPrice().toString()+"元");
+                    billVo.setBillPrice(bill.getBillPrice());
                     return billVo;
                 }
+
         ).collect(Collectors.toList());
         TableDataInfo dataTable = getDataTable(collect);
         dataTable.setTotal(lists.size());

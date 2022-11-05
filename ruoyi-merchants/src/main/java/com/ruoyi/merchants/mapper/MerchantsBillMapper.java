@@ -21,7 +21,7 @@ public interface MerchantsBillMapper
      * @param id 【请填写功能名称】主键
      * @return 【请填写功能名称】
      */
-    public MerchantsBill selectMerchantsBillById(Long id);
+    public List<MerchantsBill> selectMerchantsBillById(Long id);
 
     /**
      * 查询【请填写功能名称】列表

@@ -36,7 +36,7 @@ public class BillVo {
 
     /** 账单总价格 */
     @Excel(name = "账单总价格")
-    private String billPrice;
+    private float billPrice;
 
     /** 结算时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -93,11 +93,11 @@ public class BillVo {
         this.paymentMethod = paymentMethod;
     }
 
-    public String getBillPrice() {
+    public float getBillPrice() {
         return billPrice;
     }
 
-    public void setBillPrice(String billPrice) {
+    public void setBillPrice(float billPrice) {
         this.billPrice = billPrice;
     }
 

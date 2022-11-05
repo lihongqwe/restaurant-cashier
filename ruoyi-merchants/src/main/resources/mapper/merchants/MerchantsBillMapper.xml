@@ -45,7 +45,7 @@
 
     <select id="selectMerchantsBillById" parameterType="Long" resultMap="MerchantsBillResult">
         <include refid="selectMerchantsBillVo"/>
-        where id = #{id}
+        where merchants_id = #{merchantsId}
     </select>
 
     <insert id="insertMerchantsBill" parameterType="com.ruoyi.merchants.domain.MerchantsBill">

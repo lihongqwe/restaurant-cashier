@@ -31,7 +31,7 @@ public class MerchantsFood extends BaseEntity
 
     /** 菜品价格 */
     @Excel(name = "菜品价格")
-    private BigDecimal foodPrice;
+    private float foodPrice;
 
     /** 菜品名字 */
     @Excel(name = "菜品名字")
@@ -79,12 +79,12 @@ public class MerchantsFood extends BaseEntity
     {
         return foodId;
     }
-    public void setFoodPrice(BigDecimal foodPrice) 
+    public void setFoodPrice(float foodPrice)
     {
         this.foodPrice = foodPrice;
     }
 
-    public BigDecimal getFoodPrice() 
+    public float getFoodPrice()
     {
         return foodPrice;
     }

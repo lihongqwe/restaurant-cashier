@@ -22,14 +22,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>
             <if test="merchantsId != null "> and merchants_id = #{merchantsId}</if>
             <if test="foodId != null "> and food_id = #{foodId}</if>
-            <if test="foodPrice != null "> and food_price = #{foodPrice}</if>
             <if test="foodName != null "> and food_name = #{foodName}</if>
         </where>
     </select>
     
     <select id="selectMerchantsFoodById" parameterType="Long" resultMap="MerchantsFoodResult">
         <include refid="selectMerchantsFoodVo"/>
-        where id = #{id}
+        where merchants_id = #{merchantsId}
     </select>
 
 
@@ -62,6 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="foodPrice != null">food_price = #{foodPrice},</if>
             <if test="foodName != null">food_name = #{foodName},</if>
+            <if test="foodPicture != null">food_picture = #{foodPicture},</if>
         </trim>
         where merchants_id = #{merchantsId} and food_id=#{foodId}
     </update>
