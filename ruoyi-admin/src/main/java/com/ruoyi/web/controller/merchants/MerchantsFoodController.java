@@ -34,9 +34,8 @@ public class MerchantsFoodController extends BaseController {
     @GetMapping("/list")
     public AjaxResult list(MerchantsFood merchantsFood) {
         //添加商家id
-//        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
-        merchantsFood.setMerchantsId(2L);
-        System.out.println(merchantsFood);
+        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
+//        merchantsFood.setMerchantsId(2L);
 
         List<MerchantsFood> list = merchantsFoodService.selectMerchantsFoodList(merchantsFood);
         List<FoodVo> collect = list.stream().map(food -> {
@@ -63,7 +62,7 @@ public class MerchantsFoodController extends BaseController {
         return toAjax(merchantsFoodService.insertMerchantsFood(fileUpload, merchantsFood));
     }
 
-    /**
+    /**9
      * 修改【菜单】
      */
     @PutMapping

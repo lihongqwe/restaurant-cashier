@@ -45,8 +45,6 @@ public class MerchantsBillController extends BaseController {
     private IMerchantsBillService merchantsBillService;
 
     //登录用户的id
-
-
     /**
      * 查询【账单】列表
      */
@@ -54,8 +52,8 @@ public class MerchantsBillController extends BaseController {
     public TableDataInfo list(MerchantsBill merchantsBill) {
         List<MerchantsBill> lists = merchantsBillService.selectMerchantsBillList(merchantsBill);
         startPage();
-//        merchantsBill.setMerchantsId( SecurityUtils.getUserId());
-        merchantsBill.setMerchantsId(2L);
+        merchantsBill.setMerchantsId( SecurityUtils.getUserId());
+//        merchantsBill.setMerchantsId(2L);
         List<MerchantsBill> list = merchantsBillService.selectMerchantsBillList(merchantsBill);
         List<BillVo> collect = list.stream().map(bill -> {
                     BillVo billVo = new BillVo();

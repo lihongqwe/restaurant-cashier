@@ -131,7 +131,6 @@ export default {
       let form=new FormData()
       form.append("friends","光头强")
       console.log(form)
-      console.log(form.get('friends'))
       // console.log(new FormData())
 
       this.$refs.loginForm.validate(valid => {

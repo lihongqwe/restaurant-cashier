@@ -63,6 +63,7 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
     @Override
     public int payBill( MerchantsBill merchantsBill) {
         //修改台座状态
+
         merchantsPedestalMapper.updateState(merchantsBill.getPedestalId());
         return merchantsBillMapper.updateMerchantsBillStateById(merchantsBill);
     }
@@ -77,8 +78,8 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
         Long billId= (long) (merchantsBillMapper.selectMerchantsBillById(SecurityUtils.getUserId()).size() + 1);
         merchantsBill.setBillId(billId);
         List<food> foodName = billFareVo.getFoodName();
-        merchantsBill.setMerchantsId(2L);
-//        merchantsBill.setMerchantsId(SecurityUtils.getUserId());
+//        merchantsBill.setMerchantsId(2L);
+        merchantsBill.setMerchantsId(SecurityUtils.getUserId());
         merchantsBill.setFoodName(foodName.toString());
         //计算账单总价钱
         float  price = 0;
