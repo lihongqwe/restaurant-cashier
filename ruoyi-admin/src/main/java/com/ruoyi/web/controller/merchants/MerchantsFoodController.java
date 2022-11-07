@@ -35,8 +35,6 @@ public class MerchantsFoodController extends BaseController {
     public AjaxResult list(MerchantsFood merchantsFood) {
         //添加商家id
         merchantsFood.setMerchantsId(SecurityUtils.getUserId());
-//        merchantsFood.setMerchantsId(2L);
-
         List<MerchantsFood> list = merchantsFoodService.selectMerchantsFoodList(merchantsFood);
         List<FoodVo> collect = list.stream().map(food -> {
                     FoodVo foodVo = new FoodVo();
@@ -54,6 +52,7 @@ public class MerchantsFoodController extends BaseController {
     public AjaxResult add(@RequestParam(value = "avatar") MultipartFile fileUpload, @RequestParam("foodName") String foodName,
                           @RequestParam("foodPrice") float foodPrice) {
         MerchantsFood merchantsFood = new MerchantsFood();
+        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
         merchantsFood.setFoodName(foodName);
         merchantsFood.setFoodPrice(foodPrice);
         return toAjax(merchantsFoodService.insertMerchantsFood(fileUpload, merchantsFood));
