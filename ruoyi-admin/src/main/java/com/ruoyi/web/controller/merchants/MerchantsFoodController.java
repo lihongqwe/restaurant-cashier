@@ -47,26 +47,23 @@ public class MerchantsFoodController extends BaseController {
         ).collect(Collectors.toList());
         return AjaxResult.success(collect);
     }
-
-
     /**
      * 新增【菜单】
      */
     @PostMapping
-    public AjaxResult add(@RequestParam("avatar") MultipartFile fileUpload, @RequestParam("foodName") String foodName,
+    public AjaxResult add(@RequestParam(value = "avatar") MultipartFile fileUpload, @RequestParam("foodName") String foodName,
                           @RequestParam("foodPrice") float foodPrice) {
         MerchantsFood merchantsFood = new MerchantsFood();
-        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
         merchantsFood.setFoodName(foodName);
         merchantsFood.setFoodPrice(foodPrice);
         return toAjax(merchantsFoodService.insertMerchantsFood(fileUpload, merchantsFood));
     }
 
-    /**9
+    /**
      * 修改【菜单】
      */
     @PutMapping
-    public AjaxResult edit(@RequestParam("avatar") MultipartFile fileUpload, @RequestParam("foodName") String foodName,
+    public AjaxResult edit(@RequestParam(value="avatar",required=false) MultipartFile fileUpload, @RequestParam("foodName") String foodName,
                            @RequestParam("foodPrice") float foodPrice,@RequestParam("foodId") Long foodId) {
         MerchantsFood merchantsFood = new MerchantsFood();
         merchantsFood.setMerchantsId(SecurityUtils.getUserId());

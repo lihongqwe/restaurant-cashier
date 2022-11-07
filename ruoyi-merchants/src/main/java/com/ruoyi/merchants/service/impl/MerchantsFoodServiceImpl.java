@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -84,6 +85,10 @@ public class MerchantsFoodServiceImpl implements IMerchantsFoodService {
      */
     @Override
     public int updateMerchantsFood(MultipartFile fileUpload, MerchantsFood merchantsFood) {
+
+        if(Objects.equals(fileUpload.getOriginalFilename(), "")){
+            return merchantsFoodMapper.updateMerchantsFood(merchantsFood);
+        }
         String url = uploadPictures(fileUpload);
         merchantsFood.setFoodPicture(url);
         return merchantsFoodMapper.updateMerchantsFood(merchantsFood);
