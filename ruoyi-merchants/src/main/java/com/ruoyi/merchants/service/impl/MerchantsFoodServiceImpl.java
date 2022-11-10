@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -85,8 +86,7 @@ public class MerchantsFoodServiceImpl implements IMerchantsFoodService {
      */
     @Override
     public int updateMerchantsFood(MultipartFile fileUpload, MerchantsFood merchantsFood) {
-
-        if(Objects.equals(fileUpload.getOriginalFilename(), "")){
+        if(StringUtils.isEmpty(fileUpload.toString())){
             return merchantsFoodMapper.updateMerchantsFood(merchantsFood);
         }
         String url = uploadPictures(fileUpload);
