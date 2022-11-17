@@ -35,6 +35,7 @@ public class MerchantsFoodController extends BaseController {
     public AjaxResult list(MerchantsFood merchantsFood) {
         //添加商家id
         merchantsFood.setMerchantsId(SecurityUtils.getUserId());
+//        merchantsFood.setMerchantsId(106L);
         List<MerchantsFood> list = merchantsFoodService.selectMerchantsFoodList(merchantsFood);
         List<FoodVo> collect = list.stream().map(food -> {
                     FoodVo foodVo = new FoodVo();
@@ -50,11 +51,13 @@ public class MerchantsFoodController extends BaseController {
      */
     @PostMapping
     public AjaxResult add(@RequestParam(value = "avatar") MultipartFile fileUpload, @RequestParam("foodName") String foodName,
-                          @RequestParam("foodPrice") float foodPrice) {
+                          @RequestParam("foodPrice") float foodPrice,@RequestParam("foodType") String foodType) {
         MerchantsFood merchantsFood = new MerchantsFood();
         merchantsFood.setMerchantsId(SecurityUtils.getUserId());
+//        merchantsFood.setMerchantsId(106L);
         merchantsFood.setFoodName(foodName);
         merchantsFood.setFoodPrice(foodPrice);
+        merchantsFood.setFoodType(foodType);
         return toAjax(merchantsFoodService.insertMerchantsFood(fileUpload, merchantsFood));
     }
 
@@ -63,12 +66,13 @@ public class MerchantsFoodController extends BaseController {
      */
     @PutMapping
     public AjaxResult edit(@RequestParam(value="avatar",required=false) MultipartFile fileUpload, @RequestParam("foodName") String foodName,
-                           @RequestParam("foodPrice") float foodPrice,@RequestParam("foodId") Long foodId) {
+                           @RequestParam("foodPrice") float foodPrice,@RequestParam("foodId") Long foodId,@RequestParam("foodType") String foodType) {
         MerchantsFood merchantsFood = new MerchantsFood();
         merchantsFood.setMerchantsId(SecurityUtils.getUserId());
         merchantsFood.setFoodName(foodName);
         merchantsFood.setFoodPrice(foodPrice);
         merchantsFood.setFoodId(foodId);
+        merchantsFood.setFoodType(foodType);
         return toAjax(merchantsFoodService.updateMerchantsFood(fileUpload,merchantsFood));
     }
 

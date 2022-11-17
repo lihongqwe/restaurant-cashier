@@ -15,8 +15,18 @@ public class BillFareVo {
     @Excel(name = "菜品列表")
     private List<food> foodName;
 
+    /** 口味 */
+    @Excel(name = "口味")
+    private String taste;
 
 
+    public String getTaste() {
+        return taste;
+    }
+
+    public void setTaste(String taste) {
+        this.taste = taste;
+    }
 
     public Long getPedestalId() {
         return pedestalId;
@@ -37,8 +47,9 @@ public class BillFareVo {
     @Override
     public String toString() {
         return "BillFareVo{" +
-                ", pedestalId=" + pedestalId +
+                "pedestalId=" + pedestalId +
                 ", foodName=" + foodName +
+                ", taste=" + taste +
                 '}';
     }
 }

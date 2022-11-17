@@ -56,7 +56,6 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
     @Override
     public List<MerchantsBill> selectMerchantsBillList(MerchantsBill merchantsBill)
     {
-
         return merchantsBillMapper.selectMerchantsBillList(merchantsBill);
     }
 
@@ -75,10 +74,12 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
     public int PlaceTheOrder(BillFareVo billFareVo) {
         MerchantsBill merchantsBill = new MerchantsBill();
         merchantsBill.setPedestalId(billFareVo.getPedestalId());
+        merchantsBill.setTaste(billFareVo.getTaste());
         Long billId= (long) (merchantsBillMapper.selectMerchantsBillById(SecurityUtils.getUserId()).size() + 1);
+//        Long billId= (long) (merchantsBillMapper.selectMerchantsBillById(106L).size() + 1);
         merchantsBill.setBillId(billId);
         List<food> foodName = billFareVo.getFoodName();
-//        merchantsBill.setMerchantsId(2L);
+//        merchantsBill.setMerchantsId(106L);
         merchantsBill.setMerchantsId(SecurityUtils.getUserId());
         merchantsBill.setFoodName(foodName.toString());
         //计算账单总价钱

@@ -11,10 +11,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="foodPrice"    column="food_price"    />
         <result property="foodName"    column="food_name"    />
         <result property="foodPicture"    column="food_picture"    />
+        <result property="foodType"    column="food_type"    />
     </resultMap>
 
     <sql id="selectMerchantsFoodVo">
-        select id, merchants_id, food_id, food_price, food_name ,food_picture from merchants_food
+        select id, merchants_id, food_id, food_price, food_name ,food_picture ,food_type from merchants_food
     </sql>
 
     <select id="selectMerchantsFoodList" parameterType="com.ruoyi.merchants.domain.MerchantsFood" resultMap="MerchantsFoodResult">
@@ -23,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="merchantsId != null "> and merchants_id = #{merchantsId}</if>
             <if test="foodId != null "> and food_id = #{foodId}</if>
             <if test="foodName != null "> and food_name = #{foodName}</if>
+            <if test="foodType != null "> and food_type = #{foodType}</if>
         </where>
     </select>
     
@@ -45,6 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="foodPrice != null">food_price,</if>
             <if test="foodName != null">food_name,</if>
             <if test="foodPicture != null">food_picture,</if>
+            <if test="foodType != null">food_type,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
@@ -53,6 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="foodPrice != null">#{foodPrice},</if>
             <if test="foodName != null">#{foodName},</if>
             <if test="foodPicture != null">#{foodPicture},</if>
+            <if test="foodType != null">#{foodType},</if>
          </trim>
     </insert>
 
@@ -62,6 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="foodPrice != null">food_price = #{foodPrice},</if>
             <if test="foodName != null">food_name = #{foodName},</if>
             <if test="foodPicture != null">food_picture = #{foodPicture},</if>
+            <if test="foodType != null">food_type = #{foodType},</if>
         </trim>
         where merchants_id = #{merchantsId} and food_id=#{foodId}
     </update>

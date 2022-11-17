@@ -22,6 +22,10 @@ public class FoodVo {
     @Excel(name = "菜品图片地址")
     private String foodPicture;
 
+    /** 菜品类型 */
+    @Excel(name = "菜品类型")
+    private String foodType;
+
 
 
     public Long getFoodId() {
@@ -56,23 +60,35 @@ public class FoodVo {
         this.foodPicture = foodPicture;
     }
 
+    public String getFoodType() {
+        return foodType;
+    }
+
+    public void setFoodType(String foodType) {
+        this.foodType = foodType;
+    }
+
     public FoodVo(){
 
     }
 
-    public FoodVo(Long foodId, float foodPrice, String foodName) {
+
+    public FoodVo(Long foodId, float foodPrice, String foodName, String foodPicture, String foodType) {
         this.foodId = foodId;
         this.foodPrice = foodPrice;
         this.foodName = foodName;
+        this.foodPicture = foodPicture;
+        this.foodType = foodType;
     }
 
     @Override
     public String toString() {
         return "FoodVo{" +
                 "foodId=" + foodId +
-                ", foodPrice='" + foodPrice + '\'' +
+                ", foodPrice=" + foodPrice +
                 ", foodName='" + foodName + '\'' +
                 ", foodPicture='" + foodPicture + '\'' +
+                ", foodType='" + foodType + '\'' +
                 '}';
     }
 }

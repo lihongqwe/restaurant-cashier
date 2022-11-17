@@ -56,6 +56,10 @@ public class MerchantsBill extends BaseEntity
     @Excel(name = "账单总价格")
     private float billPrice;
 
+    /** 口味 */
+    @Excel(name = "口味")
+    private String taste;
+
 
     /** 结算时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -99,15 +103,15 @@ public class MerchantsBill extends BaseEntity
         return pedestalId;
     }
 
-//    public List<food> getFoodName() {
-//        return foodName;
-//    }
-//
-//    public void setFoodName(List<food> foodName) {
-//        this.foodName = foodName;
-//    }
+    public String getTaste() {
+        return taste;
+    }
 
-        public String getFoodName() {
+    public void setTaste(String taste) {
+        this.taste = taste;
+    }
+
+    public String getFoodName() {
         return foodName;
     }
 
@@ -174,6 +178,7 @@ public class MerchantsBill extends BaseEntity
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", createTime=" + createTime +
                 ", billPrice=" + billPrice +
+                ", taste=" + taste +
                 ", checkOutTime=" + checkOutTime +
                 '}';
     }

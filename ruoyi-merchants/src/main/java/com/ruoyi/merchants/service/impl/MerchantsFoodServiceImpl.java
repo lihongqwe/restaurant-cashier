@@ -70,7 +70,7 @@ public class MerchantsFoodServiceImpl implements IMerchantsFoodService {
     @Override
     public int insertMerchantsFood(MultipartFile fileUpload, MerchantsFood merchantsFood) {
         String url = uploadPictures(fileUpload);
-        long size = merchantsFoodMapper.selectMerchantsFoodById(SecurityUtils.getUserId()).size()+1;
+        long size = merchantsFoodMapper.selectMerchantsFoodById(merchantsFood.getMerchantsId()).size()+1;
         merchantsFood.setFoodId(size);
         merchantsFood.setFoodPicture(url);
         return merchantsFoodMapper.insertMerchantsFood(merchantsFood);

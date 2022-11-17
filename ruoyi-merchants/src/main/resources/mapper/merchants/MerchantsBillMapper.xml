@@ -14,6 +14,7 @@
         <result property="paymentMethod" column="payment_method"/>
         <result property="createTime" column="create_time"/>
         <result property="billPrice" column="bill_price"/>
+        <result property="taste" column="taste"/>
         <result property="checkOutTime" column="check_out_time"/>
     </resultMap>
 
@@ -27,6 +28,7 @@
                payment_method,
                create_time,
                bill_price,
+               taste,
                check_out_time
         from merchants_bill
     </sql>
@@ -40,6 +42,12 @@
             <if test="pedestalId != null ">and pedestal_id = #{pedestalId}</if>
             <if test="billState != null ">and bill_state = #{billState}</if>
             <if test="paymentMethod != null  and paymentMethod != ''">and payment_method = #{paymentMethod}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(merchants_bill.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(merchants_bill.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
         </where>
     </select>
 
@@ -58,6 +66,7 @@
         <if test="foodName != null and foodName != ''">food_name,</if>
         <if test="paymentMethod != null">payment_method,</if>
         <if test="billPrice != null">bill_price,</if>
+        <if test="taste != null">taste,</if>
         bill_state,
         create_time)
         values (
@@ -69,6 +78,7 @@
         <if test="billState != null">#{billState},</if>
         <if test="paymentMethod != null">#{paymentMethod},</if>
         <if test="billPrice != null">#{billPrice},</if>
+        <if test="taste != null">#{taste},</if>
         0,
         sysdate()
         )

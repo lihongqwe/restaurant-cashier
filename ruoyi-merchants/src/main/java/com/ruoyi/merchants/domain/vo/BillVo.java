@@ -38,11 +38,24 @@ public class BillVo {
     @Excel(name = "账单总价格")
     private float billPrice;
 
+    /** 口味 */
+    @Excel(name = "口味")
+    private String taste;
+
+
     /** 结算时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "结算时间")
     private Date checkOutTime;
 
+
+    public String getTaste() {
+        return taste;
+    }
+
+    public void setTaste(String taste) {
+        this.taste = taste;
+    }
 
     public Date getCreateTime() {
         return createTime;
@@ -120,6 +133,7 @@ public class BillVo {
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", createTime=" + createTime +
                 ", billPrice=" + billPrice +
+                ", taste=" + taste +
                 ", checkOutTime=" + checkOutTime +
                 '}';
     }

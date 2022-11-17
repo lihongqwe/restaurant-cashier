@@ -1,6 +1,7 @@
 package com.ruoyi.merchants.domain;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -40,6 +41,10 @@ public class MerchantsFood extends BaseEntity
     /** 菜品图片地址 */
     @Excel(name = "菜品图片地址")
     private String foodPicture;
+
+    /** 菜品类型 */
+    @Excel(name = "菜品类型")
+    private String foodType;
 
     private Long[]  foodIds;
 
@@ -89,7 +94,27 @@ public class MerchantsFood extends BaseEntity
         return foodPrice;
     }
 
+    public String getFoodType() {
+        return foodType;
+    }
 
+    public void setFoodType(String foodType) {
+        this.foodType = foodType;
+    }
+
+    @Override
+    public String toString() {
+        return "MerchantsFood{" +
+                "id=" + id +
+                ", merchantsId=" + merchantsId +
+                ", foodId=" + foodId +
+                ", foodPrice=" + foodPrice +
+                ", foodName='" + foodName + '\'' +
+                ", foodPicture='" + foodPicture + '\'' +
+                ", foodType='" + foodType + '\'' +
+                ", foodIds=" + Arrays.toString(foodIds) +
+                '}';
+    }
 
     public String getFoodName() {
         return foodName;
@@ -107,16 +132,4 @@ public class MerchantsFood extends BaseEntity
         this.foodPicture = foodPicture;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("merchantsId", getMerchantsId())
-            .append("foodId", getFoodId())
-            .append("foodPrice", getFoodPrice())
-            .append("foodName", getFoodName())
-            .append("foodPicture", getFoodPicture())
-            .append("foodIds", getFoodIds())
-            .toString();
-    }
 }

@@ -1,16 +1,12 @@
 package com.ruoyi.web.controller.merchants;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson2.JSON;
 import com.ruoyi.common.utils.SecurityUtils;
-import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.merchants.domain.vo.BillFareVo;
 import com.ruoyi.merchants.domain.vo.BillVo;
 import com.ruoyi.merchants.domain.vo.food;
@@ -53,7 +49,7 @@ public class MerchantsBillController extends BaseController {
         List<MerchantsBill> lists = merchantsBillService.selectMerchantsBillList(merchantsBill);
         startPage();
         merchantsBill.setMerchantsId( SecurityUtils.getUserId());
-//        merchantsBill.setMerchantsId(2L);
+//        merchantsBill.setMerchantsId(106L);
         List<MerchantsBill> list = merchantsBillService.selectMerchantsBillList(merchantsBill);
         List<BillVo> collect = list.stream().map(bill -> {
                     BillVo billVo = new BillVo();
@@ -78,7 +74,6 @@ public class MerchantsBillController extends BaseController {
      */
     @PostMapping(value ="/pay")
     public AjaxResult pay(@RequestBody MerchantsBill merchantsBill ){
-
         merchantsBill.setMerchantsId(SecurityUtils.getUserId());
         return toAjax(merchantsBillService.payBill(merchantsBill));
     }
