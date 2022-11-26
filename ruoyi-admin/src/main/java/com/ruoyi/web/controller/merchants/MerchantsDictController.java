@@ -21,8 +21,8 @@ public class MerchantsDictController extends BaseController {
 
     @GetMapping("type/{dictLabel}")
     public AjaxResult dictType(@PathVariable String dictLabel){
-//        Long userId = SecurityUtils.getUserId();
-        Long userId=107L;
+        Long userId = SecurityUtils.getUserId();
+//        Long userId=107L;
         List<MerchantsDict> merchantsDicts=iMerchantsDictService.selectDictDataByLabel(userId,dictLabel);
         return AjaxResult.success(merchantsDicts);
     }
@@ -30,8 +30,8 @@ public class MerchantsDictController extends BaseController {
     @PostMapping()
     public  AjaxResult add(@Validated @RequestBody MerchantsDict merchantsDict){
 
-//        Long userId = SecurityUtils.getUserId();
-        Long userId=107L;
+        Long userId = SecurityUtils.getUserId();
+//        Long userId=107L;
         merchantsDict.setMerchantsId(userId);
         return toAjax(iMerchantsDictService.insertDictData(merchantsDict));
     }
