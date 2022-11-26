@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.merchants.mapper.MerchantsDictMapper">
+
+    <resultMap type="MerchantsDict" id="MerchantsDict">
+        <id     property="dictCode"   column="dict_code"   />
+        <result property="merchantsId" column="merchants_id"/>
+        <result property="dictSort"   column="dict_sort"   />
+        <result property="dictLabel"  column="dict_label"  />
+        <result property="dictValue"  column="dict_value"  />
+    </resultMap>
+
+
+    <insert id="insertDictData" parameterType="MerchantsDict">
+        insert into merchants_dict(
+        <if test="merchantsId != null">merchants_id,</if>
+        <if test="dictSort != null">dict_sort,</if>
+        <if test="dictLabel != null and dictLabel != ''">dict_label,</if>
+        <if test="dictValue != null and dictValue != ''">dict_value</if>
+        )values (
+        <if test="merchantsId != null">#{merchantsId},</if>
+        <if test="dictSort != null">#{dictSort},</if>
+        <if test="dictLabel != null and dictLabel != ''">#{dictLabel},</if>
+        <if test="dictValue != null and dictValue != ''">#{dictValue}</if>
+        )
+    </insert>
+    <delete id="deleteDictDataById">
+        delete from merchants_dict where dict_code=#{dictCode}
+    </delete>
+
+    <select id="selectDictDataBydictLabel" resultMap="MerchantsDict">
+        select  * from  merchants_dict
+            where merchants_id=#{userId} and dict_label=#{dictLabel}
+    </select>
+</mapper>
