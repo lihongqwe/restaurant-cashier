@@ -89,10 +89,10 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
         MerchantsBill merchantsBill = new MerchantsBill();
         merchantsBill.setPedestalId(billFareVo.getPedestalId());
         Long billId= (long) (merchantsBillMapper.selectMerchantsBillById(SecurityUtils.getUserId()).size() + 1);
-//        Long billId= (long) (merchantsBillMapper.selectMerchantsBillById(107L).size() + 1);
+//        Long billId= (long) (merchantsBillMapper.selectMerchantsBillById().size() + 1);
         merchantsBill.setBillId(billId);
         List<food> foodName = billFareVo.getFoodName();
-//        merchantsBill.setMerchantsId(107L);
+//        merchantsBill.setMerchantsId();
         merchantsBill.setMerchantsId(SecurityUtils.getUserId());
         merchantsBill.setFoodName(foodName.toString());
         //计算账单总价钱
