@@ -47,8 +47,8 @@ public class MerchantsBillController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(MerchantsBill merchantsBill) {
         startPage();
-        merchantsBill.setMerchantsId(107L);
-//        merchantsBill.setMerchantsId( SecurityUtils.getUserId());
+//        merchantsBill.setMerchantsId();
+        merchantsBill.setMerchantsId( SecurityUtils.getUserId());
         List<BillVo> BillList = merchantsBillService.selectMerchantsBillList(merchantsBill);
        float TotalPrice = 0;
         for (BillVo billVo: BillList) {
