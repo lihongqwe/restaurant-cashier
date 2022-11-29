@@ -51,10 +51,10 @@ public class MerchantsFoodController extends BaseController {
      */
     @PostMapping
     public AjaxResult add(@RequestParam(value = "avatar") MultipartFile fileUpload, @RequestParam("foodName") String foodName,
-                          @RequestParam("foodPrice") float foodPrice,@RequestParam("foodType") String foodType) {
+                          @RequestParam("foodPrice") float foodPrice,@RequestParam("foodType") String foodType ) {
         MerchantsFood merchantsFood = new MerchantsFood();
-        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
-//        merchantsFood.setMerchantsId(106L);
+//        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
+        merchantsFood.setMerchantsId(107L);
         merchantsFood.setFoodName(foodName);
         merchantsFood.setFoodPrice(foodPrice);
         merchantsFood.setFoodType(foodType);
@@ -68,7 +68,8 @@ public class MerchantsFoodController extends BaseController {
     public AjaxResult edit(@RequestParam(value="avatar",required=false) MultipartFile fileUpload, @RequestParam("foodName") String foodName,
                            @RequestParam("foodPrice") float foodPrice,@RequestParam("foodId") Long foodId,@RequestParam("foodType") String foodType) {
         MerchantsFood merchantsFood = new MerchantsFood();
-        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
+//        merchantsFood.setMerchantsId(SecurityUtils.getUserId());
+        merchantsFood.setMerchantsId(107L);
         merchantsFood.setFoodName(foodName);
         merchantsFood.setFoodPrice(foodPrice);
         merchantsFood.setFoodId(foodId);

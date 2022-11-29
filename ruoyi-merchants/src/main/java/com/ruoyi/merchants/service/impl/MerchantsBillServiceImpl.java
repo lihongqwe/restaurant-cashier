@@ -3,11 +3,13 @@ package com.ruoyi.merchants.service.impl;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
-
+import java.util.stream.Collectors;
+import cn.hutool.json.JSONUtil;
 import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.merchants.domain.MerchantsPedestal;
 import com.ruoyi.merchants.domain.vo.BillFareVo;
+import com.ruoyi.merchants.domain.vo.BillVo;
 import com.ruoyi.merchants.domain.vo.food;
 import com.ruoyi.merchants.mapper.MerchantsPedestalMapper;
 import org.springframework.beans.BeanUtils;
@@ -54,9 +56,21 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
      * @return 【请填写功能名称】
      */
     @Override
-    public List<MerchantsBill> selectMerchantsBillList(MerchantsBill merchantsBill)
+    public List<BillVo> selectMerchantsBillList(MerchantsBill merchantsBill)
     {
-        return merchantsBillMapper.selectMerchantsBillList(merchantsBill);
+        List<MerchantsBill> merchantsBills =merchantsBillMapper.selectMerchantsBillList(merchantsBill);
+        List<BillVo> collect = merchantsBills.stream().map(bill -> {
+                    BillVo billVo = new BillVo();
+                    BeanUtils.copyProperties(bill, billVo);
+                    String foodName = bill.getFoodName().replace("food","")
+                            .replace("=",":");
+                    List<food> food=  JSONUtil.toList(foodName,food.class);
+                    billVo.setFoodName(food);
+                    billVo.setBillPrice(bill.getBillPrice());
+                    return billVo;
+                }
+        ).collect(Collectors.toList());
+        return collect;
     }
 
     @Override
@@ -74,12 +88,11 @@ public class MerchantsBillServiceImpl implements IMerchantsBillService
     public int PlaceTheOrder(BillFareVo billFareVo) {
         MerchantsBill merchantsBill = new MerchantsBill();
         merchantsBill.setPedestalId(billFareVo.getPedestalId());
-        merchantsBill.setTaste(billFareVo.getTaste());
         Long billId= (long) (merchantsBillMapper.selectMerchantsBillById(SecurityUtils.getUserId()).size() + 1);
-//        Long billId= (long) (merchantsBillMapper.selectMerchantsBillById(106L).size() + 1);
+//        Long billId= (long) (merchantsBillMapper.selectMerchantsBillById(107L).size() + 1);
         merchantsBill.setBillId(billId);
         List<food> foodName = billFareVo.getFoodName();
-//        merchantsBill.setMerchantsId(106L);
+//        merchantsBill.setMerchantsId(107L);
         merchantsBill.setMerchantsId(SecurityUtils.getUserId());
         merchantsBill.setFoodName(foodName.toString());
         //计算账单总价钱

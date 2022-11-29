@@ -85,8 +85,21 @@ public class BaseController
         rspData.setCode(HttpStatus.SUCCESS);
         rspData.setMsg("查询成功");
         rspData.setRows(list);
+
         return rspData;
     }
+
+    protected TableDataInfo getDataTable(List<?> list,float TotalPrice)
+    {
+        TableDataInfo rspData = new TableDataInfo();
+        rspData.setCode(HttpStatus.SUCCESS);
+        rspData.setMsg("查询成功");
+        rspData.setRows(list);
+        rspData.setTotalPrice(TotalPrice);
+        return rspData;
+    }
+
+
 
     /**
      * 返回成功

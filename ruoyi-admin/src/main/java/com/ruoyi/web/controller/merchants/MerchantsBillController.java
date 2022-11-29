@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.merchants;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
@@ -40,33 +41,34 @@ public class MerchantsBillController extends BaseController {
     @Autowired
     private IMerchantsBillService merchantsBillService;
 
-    //登录用户的id
     /**
      * 查询【账单】列表
      */
     @GetMapping("/list")
     public TableDataInfo list(MerchantsBill merchantsBill) {
-        List<MerchantsBill> lists = merchantsBillService.selectMerchantsBillList(merchantsBill);
         startPage();
-        merchantsBill.setMerchantsId( SecurityUtils.getUserId());
-//        merchantsBill.setMerchantsId(106L);
-        List<MerchantsBill> list = merchantsBillService.selectMerchantsBillList(merchantsBill);
-        List<BillVo> collect = list.stream().map(bill -> {
-                    BillVo billVo = new BillVo();
-                    BeanUtils.copyProperties(bill, billVo);
-                    String foodName = bill.getFoodName().replace("food","")
-                            .replace("=",":");
-                    List<food> food=  JSONUtil.toList(foodName,food.class);
-                    billVo.setFoodName(food);
-                    billVo.setBillPrice(bill.getBillPrice());
-                    return billVo;
-                }
-
-        ).collect(Collectors.toList());
-        TableDataInfo dataTable = getDataTable(collect);
-        dataTable.setTotal(lists.size());
+        merchantsBill.setMerchantsId(107L);
+//        merchantsBill.setMerchantsId( SecurityUtils.getUserId());
+        List<BillVo> BillList = merchantsBillService.selectMerchantsBillList(merchantsBill);
+       float TotalPrice = 0;
+        for (BillVo billVo: BillList) {
+            float billPrice = billVo.getBillPrice();
+            TotalPrice +=billPrice;
+        }
+        HashMap<String, Object> res = new HashMap<>();
+        res.put("TotalPrice",TotalPrice);
+        TableDataInfo dataTable = getDataTable(BillList,TotalPrice);
+        dataTable.setTotal(BillList.size());
         return dataTable;
     }
+
+//    /**
+//     * 账单汇总
+//     */
+//    @GetMapping("/summary")
+//    public AjaxResult summary(){
+//        return  AjaxResult.success();
+//    }
 
 
     /**
@@ -94,18 +96,6 @@ public class MerchantsBillController extends BaseController {
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         return AjaxResult.success(merchantsBillService.selectMerchantsBillById(id));
     }
-
-    /**
-     * 导出【请填写功能名称】列表
-     */
-    @PostMapping("/export")
-    public void export(HttpServletResponse response, MerchantsBill merchantsBill) {
-        List<MerchantsBill> list = merchantsBillService.selectMerchantsBillList(merchantsBill);
-        ExcelUtil<MerchantsBill> util = new ExcelUtil<MerchantsBill>(MerchantsBill.class);
-        util.exportExcel(response, list, "【请填写功能名称】数据");
-    }
-
-
 
     /**
      * 新增【请填写功能名称】

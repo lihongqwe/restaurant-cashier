@@ -3,6 +3,7 @@ package com.ruoyi.merchants.service;
 import java.util.List;
 import com.ruoyi.merchants.domain.MerchantsBill;
 import com.ruoyi.merchants.domain.vo.BillFareVo;
+import com.ruoyi.merchants.domain.vo.BillVo;
 
 /**
  * 【请填写功能名称】Service接口
@@ -26,7 +27,7 @@ public interface IMerchantsBillService
      * @param merchantsBill 【请填写功能名称】
      * @return 【请填写功能名称】集合
      */
-    public List<MerchantsBill> selectMerchantsBillList(MerchantsBill merchantsBill);
+    public List<BillVo> selectMerchantsBillList(MerchantsBill merchantsBill);
 
     /**
      * 新增【请填写功能名称】

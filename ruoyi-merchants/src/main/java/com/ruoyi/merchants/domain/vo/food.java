@@ -13,7 +13,15 @@ public class food {
 
     private int number;
 
+    private  String taste;
 
+    public String getTaste() {
+        return taste;
+    }
+
+    public void setTaste(String taste) {
+        this.taste = taste;
+    }
 
     public int getNumber() {
         return number;
@@ -39,12 +47,14 @@ public class food {
         this.price = price;
     }
 
+
     @Override
     public String toString() {
         return "food{" +
                 "name='" + name + '\'' +
                 ", price=" + price +
                 ", number=" + number +
+                ", taste='" + taste + '\'' +
                 '}';
     }
 }
