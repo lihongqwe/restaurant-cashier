@@ -34,8 +34,8 @@ server:
       min-spare: 100
 
 SavePath:
-#  ProfilePhoto: '/root/data/restaurant-cashier/images/'  #图标存储路径
-  ProfilePhoto: 'C:/Users/lihong/Desktop/restaurant-cashier/ruoyi-admin/src/main/resources/imagesimages/'  #图标存储路径
+  ProfilePhoto: '/root/data/restaurant-cashier/images/'  #图标存储路径
+#  ProfilePhoto: 'C:/Users/lihong/Desktop/restaurant-cashier/ruoyi-admin/src/main/resources/imagesimages/'  #图标存储路径
   ProfilePhotoMapper: 'profilePhoto/'  #图标的映射路径
 # 日志配置
 logging:
